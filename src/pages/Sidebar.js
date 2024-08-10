@@ -9,8 +9,8 @@ const Sidebar = () => {
     const menuItems = [
         { icon: <FaTasks size={20} />, label: 'Dashboard', path: '/Dashboard/Home' },
         { icon: <FaCode size={20} />, label: 'Code Editor', path: '/Editor' },
-        { icon: <FaGamepad size={20} />, label: 'Battleground', path: '#' },
-        { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '#' },
+        { icon: <FaGamepad size={20} />, label: 'Battleground', path: '/#' },
+        { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '/#' },
     ];
 
     const userItems = [
@@ -35,6 +35,7 @@ const Sidebar = () => {
                         key={index}
                         className={`sidebar-icon ${activeIndex === index ? 'active' : ''}`}
                         onClick={() => handleNavigation(index, item.path)}
+                        title={item.label}
                     >
                         {item.icon}
                         {activeIndex === index && <div className="active-indicator" />}
@@ -46,6 +47,7 @@ const Sidebar = () => {
                     <div
                         key={index}
                         className={`sidebar-icon`}
+                        title={item.label}
                     >
                         {item.icon}
                     </div>
