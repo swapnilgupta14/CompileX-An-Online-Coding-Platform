@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import Dropdown from './common/Dropdown';
-import OutputPanel from './common/OutputPanel';
+import Dropdown from '../components/common/Dropdown';
+import OutputPanel from '../components/common/OutputPanel';
 import { FaArrowLeft } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 import dynamic from 'next/dynamic';
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 const CodeEditor = () => {
+  const router = useRouter();
   const [filename, setFilename] = useState('main.cpp');
   const [theme, setTheme] = useState('light');
   const [language, setLanguage] = useState('cpp');
   const [fontSize, setFontSize] = useState(16);
-  const [outputVisible, setOutputVisible] = useState(false);
+  const [outputVisible, setOutputVisible] = useState(true);
 
   const languageOptions = [
     { value: 'cpp', label: 'C++' },
@@ -78,7 +80,7 @@ const CodeEditor = () => {
   return (
     <div className="code-editor-container">
       <header>
-        <FaArrowLeft size={15} />
+        <FaArrowLeft size={15} onClick={() => router.push('/Dashboard/Home')} />
         <h1>Playground</h1>
       </header>
 
@@ -93,7 +95,8 @@ const CodeEditor = () => {
 
       <div className={`editor-section ${outputVisible ? 'with-output' : ''}`}>
         <MonacoEditor
-          height="70vh"
+          height="50vh"
+          width="100%"
           theme={theme}
           language={language}
           value="// Start coding here!"
@@ -106,7 +109,6 @@ const CodeEditor = () => {
           <button onClick={toggleOutput}>
             {outputVisible ? 'Hide Output' : 'Show Output'}
           </button>
-          <button onClick={() => alert('Settings')}>Settings</button>
         </div>
         <div className="bottom-bar-right">
           <button onClick={() => alert('Run code')}>Run</button>
@@ -116,7 +118,9 @@ const CodeEditor = () => {
 
       {outputVisible && (
         <>
-          <OutputPanel />
+          <OutputPanel
+            index={1}
+          />
         </>
       )}
 
