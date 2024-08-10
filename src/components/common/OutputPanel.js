@@ -21,7 +21,7 @@ const OutputPanel = ({ type, width, height, customStyles , value , outputState})
                         className={`outputAreaStyle ${outputState === "SUCCESS" ? 'bg-sky-100' : outputState === "ERROR" ? 'bg-red-100' : 'bg-gray-100'}`}
                         placeholder="// Your output will appear here..."
                         value={value}
-                        rows={Math.min(10 ,value.split("\n").length)}
+                        rows={value ? Math.min(10 ,value.split("\n").length) : 4}
                     >
                     </textarea>
                 </div>
