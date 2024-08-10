@@ -1,15 +1,15 @@
-// src/App.js
-import React from 'react';
-import CodeEditor from '../components/Editor';
-import Sidebar from '../components/Sidebar';
+// src/pages/index.js
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-function App() {
-  return (
-    <div className = "main-container">
-      <Sidebar />
-      <CodeEditor />
-    </div>
-  );
-}
+const Home = () => {
+  const router = useRouter();
 
-export default App;
+  useEffect(() => {
+    router.replace('/Editor');
+  }, [router]);
+
+  return null; 
+};
+
+export default Home;

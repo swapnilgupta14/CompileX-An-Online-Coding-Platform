@@ -1,16 +1,17 @@
-const OutputPanel = () => {
+// components/OutputPanel.js
+const OutputPanel = ({index}) => {
     return (
         <div className="containerStyle">
-            <div className="customTestCasesStyle" >
+            <div className="customTestCasesStyle">
                 <h2>Custom Test Cases</h2>
                 <div className="contentStyle">
-                    <p>Enter Test Cases</p>
+                    <textarea className="textAreaStyle" placeholder="Enter your test cases here..."></textarea>
                 </div>
             </div>
-            <div className="outputStyle" >
+            <div className="outputStyle">
                 <h2>Console Output</h2>
                 <div className="contentStyle">
-                    <p>// Your output will appear here...</p>
+                    <div className="outputAreaStyle">// Your output will appear here...</div>
                 </div>
             </div>
         </div>
