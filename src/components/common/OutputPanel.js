@@ -17,9 +17,12 @@ const OutputPanel = ({ type, width, height, customStyles }) => {
             <div className="outputStyle">
                 <h2>Console Output</h2>
                 <div className="contentStyle">
-                    <div className="outputAreaStyle">
-                        // Your output will appear here...
-                    </div>
+                    <textarea 
+                    className="outputAreaStyle"
+                    placeholder="// Your output will appear here..."
+                    >
+                        
+                    </textarea>
                 </div>
             </div>
         </div>
