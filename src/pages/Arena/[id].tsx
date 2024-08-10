@@ -5,6 +5,11 @@ import Dropdown from '../../components/common/Dropdown';
 import dynamic from 'next/dynamic';
 import OutputPanel from '../../components/common/OutputPanel';
 import { BsTextarea } from 'react-icons/bs';
+import {Problem, testcaseType} from "../../types/API";
+import ProblemAPI from "../../utils/ProblemAPI";
+import {QUESTION_DIFFICULTY} from "../../utils/Static";
+import useWebSocket from "../../utils/useWebSocket";
+import {ArenaCodeReq, ArenaCodeRes, PlaygroundCodeReq, PlaygroundCodeRes} from "../../types/Socket";
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 const ProblemDisplay = ({ problem }) => (
@@ -12,11 +17,14 @@ const ProblemDisplay = ({ problem }) => (
         <div className="problem-header">
             <h2>{problem.p_title}</h2>
             <span className="problem-stats">
-                <p>Likes: {problem.p_likes}</p>
-                <p>Difficulty: {problem.p_difficulty}</p>
+                <p>Difficulty: {" "}
+                    <span className={`${QUESTION_DIFFICULTY[problem.p_difficulty].style} px-2 py-1 rounded-md`}>
+                        {QUESTION_DIFFICULTY[problem.p_difficulty].Title}
+                    </span>
+                    </p>
             </span>
         </div>
-        <p>{problem.p_content}</p>
+        <pre>{problem.p_content}</pre>
         <div className="problem-footer">
             <p>Author: {problem.p_author}</p>
         </div>
@@ -25,12 +33,55 @@ const ProblemDisplay = ({ problem }) => (
 
 const Arena = () => {
     const router = useRouter();
+
     const [code, setCode] = useState('// Start coding here!');
     const [theme, setTheme] = useState('vs-dark');
     const [language, setLanguage] = useState('cpp');
     const [fontSize, setFontSize] = useState(16);
     const [activeTab, setActiveTab] = useState('output');
     const [activeTestTab, setActiveTestTab] = useState(1);
+
+    const [questionData, setQuestionData] = useState<Problem>(undefined)
+    const [testcases, setTestcases] = useState<testcaseType[]>([])
+
+    const [runningCasesArr, setRunningCasesArr] = useState<ArenaCodeRes["responseData"]>([])
+    const [customInput, setCustomInput] = useState("")
+
+    const [codeOutput, setCodeOutput] = useState<string>()
+    const [outputState, setOutputState] = useState<string>()
+    const [runningTestcaseState, setRunningTestcaseState] = useState<"INITIAL" | "LOADING" | "OUTPUT">("INITIAL")
+
+    const { sendMessage : playgroundExecCode , messages : playgroundResult } = useWebSocket<PlaygroundCodeReq,PlaygroundCodeRes>("/pg/code_execute")
+
+    const { sendMessage : questionExecCode , messages : questionResult } = useWebSocket<ArenaCodeReq,ArenaCodeRes>("/arena/code_execute")
+
+
+    useEffect(() => {
+        const data = playgroundResult;
+        if(data){
+            console.log("details" in data.responseData.data)
+            console.log("output" in data.responseData.data)
+
+            if(data.responseData.error && "details" in data.responseData.data){
+                setCodeOutput(data.responseData.data.message)
+                setOutputState("ERROR")
+            }else if(data.responseData && "output" in data.responseData.data){
+                setCodeOutput(data.responseData.data.output)
+                setOutputState("SUCCESS")
+            }else{
+                setCodeOutput("Some error occurred")
+                setOutputState("ERROR")
+            }
+        }
+    }, [playgroundResult]);
+
+    useEffect(() => {
+        if(questionResult){
+            setRunningTestcaseState("OUTPUT")
+            setRunningCasesArr(questionResult.responseData)
+        }
+    }, [questionResult]);
+
 
     const handleThemeChange = (e) => setTheme(e.target.value);
 
@@ -39,48 +90,26 @@ const Arena = () => {
         setLanguage(selectedLanguage);
     };
 
+
+    useEffect(() => {
+        if(router.query.id){
+            ProblemAPI.problemGetById({p_id:router.query.id as string}).then((data)=>{
+                if(data.responseData && data.status_code===200)
+                setQuestionData(data.responseData)
+            })
+            ProblemAPI.testcaseGet({
+                p_id : router.query.id as string,
+            }).then((data)=>{
+                if(data.responseData && data.responseData.length >= 1)
+                    setTestcases(data.responseData)
+            })
+        }
+    }, [router.query.id]);
+
     const handleFontSizeChange = (e) => setFontSize(parseInt(e.target.value));
-
-    const dummyProblem = [
-        {
-            p_title: 'Two Sum',
-            p_content: `Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
-            You may assume that each input would have exactly one solution, and you may not use the same element twice.
-            Example:
-            Input: nums = [2,7,11,15], target = 9
-            Output: [0,1]
-            Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`,
-            p_author: 'LeetCoder',
-            p_likes: 250,
-            p_difficulty: 0,
-            p_constraints: '1 <= nums.length <= 10^4',
-            p_input: 'nums = [2,7,11,15], target = 9',
-            p_output: '[0,1]',
-        },
-    ];
-
-    const dummyTestCases = [
-        {
-            input: 'nums = [2,7,11,15], target = 9',
-            output: '[0,1]',
-            expected: '[0,1]',
-        },
-        {
-            input: 'nums = [3,2,4], target = 6',
-            output: '[1,2]',
-            expected: '[1,2]',
-        },
-        {
-            input: 'nums = [3,3], target = 6',
-            output: '[0,1]',
-            expected: '[0,1]',
-        },
-    ];
 
     const languageOptions = [
         { value: 'cpp', label: 'C++' },
-        { value: 'python', label: 'Python' },
-        { value: 'javascript', label: 'JavaScript' },
     ];
 
     const themeOptions = [
@@ -100,9 +129,28 @@ const Arena = () => {
     ];
 
     const handleCodeChange = (value) => setCode(value);
+
     useEffect(() => {
         console.log(JSON.stringify(code));
     }, [code]);
+
+    const handleRun = () =>{
+        if(activeTab === 'customInput'){
+            setCodeOutput("Running custom input")
+            setOutputState("LOADING")
+            playgroundExecCode({
+                code : code,
+                input : customInput
+            })
+            setActiveTab("output")
+        }else{
+            setRunningTestcaseState("LOADING")
+            questionExecCode({
+                code : code,
+                p_id : router.query.id as string
+            })
+        }
+    }
 
     return (
         <div className="arena-container">
@@ -112,22 +160,30 @@ const Arena = () => {
             </header>
 
             <div className="content">
-                <div className="problem-column">
-                    {dummyProblem.map((problem, index) => (
-                        <ProblemDisplay key={index} problem={problem} />
-                    ))}
+                <div className="problem-column h-[85vh] overflow-auto">
+                    {
+                        questionData && <ProblemDisplay problem={questionData} />
+                    }
 
                     <h3>Public Test Cases</h3>
-                    {dummyProblem.map((problem, index) => (
+                    {testcases.map((problem, index) => (
                         <div key={index} className="test-case">
                             <h4>Test Case {index + 1}</h4>
-                            <p>Input: {problem.p_input || 'N//A'}</p>
-                            <p>Output: {problem.p_output || 'n/a'}</p>
+                            <div>
+                                <p>Input: </p>
+                                <textarea className={`flex bg-amber-50 w-full p-2 rounded-md resize-none`} value={problem.input_case || 'N//A'}
+                                          rows={problem.input_case ? problem.input_case.split("\n").length : 1}/>
+                            </div>
+                            <div>
+                                <p>Output: </p>
+                                <textarea className={`flex bg-amber-50 w-full p-2 rounded-md resize-none`} value={problem.output_case || 'N//A'}
+                                          rows={problem.output_case ? problem.output_case.split("\n").length : 1}/>
+                            </div>
                         </div>
                     ))}
 
-                    <h3>Constraints</h3>
-                    <p>{dummyProblem[0].p_constraints || 'No constraints provided.'}</p>
+                    {/*<h3>Constraints</h3>*/}
+                    {/*<p>{questionData.p_constraints || 'No constraints provided.'}</p>*/}
                 </div>
 
                 <div className="editor-column">
@@ -138,8 +194,7 @@ const Arena = () => {
                             <Dropdown options={fontSizeOptions} value={fontSize} onChange={handleFontSizeChange} />
                         </div>
                         <div className="execution-button">
-                            <button className="run" onClick={() => alert('Run code')}>Run</button>
-                            <button className="submit" onClick={() => alert('Submit code')}>Submit</button>
+                            <button className="submit" onClick={handleRun}>Run</button>
                         </div>
                     </div>
                     <div className="editor">
@@ -159,7 +214,7 @@ const Arena = () => {
                     {/* <div className="output"> */}
                     <div className="containerStyle-arena">
 
-                        <div className="tabContent">
+                        <div className="tabContent h-full overflow-auto">
                             <div className="tabs">
                                 <button
                                     className={`tabButton ${activeTab === 'output' ? 'active' : ''}`}
@@ -168,55 +223,59 @@ const Arena = () => {
                                     Console Output
                                 </button>
                                 <button
-                                    className={`tabButton ${activeTab === 'testcases' ? 'active' : ''}`}
-                                    onClick={() => setActiveTab('testcases')}
+                                    className={`tabButton ${activeTab === 'customInput' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('customInput')}
                                 >
                                     Custom Test Cases
                                 </button>
+                                <button
+                                    className={`tabButton ${activeTab === 'testOutput' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('testOutput')}
+                                >
+                                    TestOutput
+                                </button>
                             </div>
                             {activeTab === 'output' && (
-                                <div className="outputStyle">
-                                    {/* <div>
-                                    // <p>
-                                    // </p>
-                                    </div> */}
-                                    <div className="contentStyle">
-                                        <textarea className="outputAreaStyle">
-                                            Your output will appear here...
-                                        </textarea>
-                                    </div>
+                                <OutputPanel
+                                    type={'playground'}
+                                    value={codeOutput}
+                                    outputState={outputState}
+                                />
+                            )}
+
+                            {activeTab === 'customInput' && (
+                                <div className="customTestCases-arena">
+                                    <textarea rows={4} className={`resize-none p-2 flex w-full h-full rounded-md`} placeholder={"custom"} onChange={e=>setCustomInput(e.target.value)}/>
                                 </div>
                             )}
 
-                            {activeTab === 'testcases' && (
-                                <div className="customTestCases-arena">
-                                    <div className="tabs">
-                                        {dummyTestCases.map((item, index) => (
-                                            <div key={index} className="tab" onClick={() => setActiveTestTab(index)}>
-                                                <input
-                                                    type="radio"
-                                                    id={`tab-${index}`}
-                                                    name="testCaseTabs"
-                                                    defaultChecked={index === 1}
-                                                />
-                                                <label>Test Case {index + 1}</label>
+                            {activeTab === 'testOutput' && (
+                                <div className="p-2 flex flex-col gap-2 h-full overflow-auto max-h-[200px]">
+                                    {
+                                        runningTestcaseState === "OUTPUT" && runningCasesArr.length >=1 ? runningCasesArr.map((testcase, index) => (
+                                            <div className={`bg-gray-100 p-2 rounded-md flex justify-between`} key={index}>
+                                                <div className={``}>
+                                                    <span>TESTCASE : {index+1}</span>
+                                                </div>
+                                                <span className={`p-1 bg-white rounded-md`}>
+                                                    {
+                                                        testcase.passed ? <i className="fi fi-br-check text-green-500"></i> :
+                                                            <i className="fi fi-br-cross text-red-500"></i>
+                                                    }
+                                                </span>
                                             </div>
-                                        ))}
-                                    </div>
-                                    <div key={activeTestTab} className="tab-content" style={{ display: `tab-${activeTestTab}` === `tab-1` ? 'block' : 'none' }}>
-                                        <div className="testCaseField">
-                                            <label>Input:</label>
-                                            <input type="text" value={dummyTestCases[activeTestTab].input} />
-                                        </div>
-                                        <div className="testCaseField">
-                                            <label>Code Output:</label>
-                                            <input type="text" value={dummyTestCases[activeTestTab].output} />
-                                        </div>
-                                        <div className="testCaseField">
-                                            <label>Expected Result:</label>
-                                            <input type="text" value={dummyTestCases[activeTestTab].expected} />
-                                        </div>
-                                    </div>
+                                        )) :
+
+                                            runningTestcaseState === "LOADING" ?(
+                                            <div>
+                                                <span>Loading...</span>
+                                            </div>
+                                        ): (
+                                                <div>
+                                                    <span>run code to see test cases</span>
+                                                </div>
+                                            )
+                                    }
                                 </div>
                             )}
 

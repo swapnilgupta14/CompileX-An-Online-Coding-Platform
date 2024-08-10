@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import dynamic from 'next/dynamic';
 import useWebSocket from "../utils/useWebSocket";
-import {SocketCodeReq, SocketCodeRes} from "../types/Socket";
+import {PlaygroundCodeReq, PlaygroundCodeRes} from "../types/Socket";
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 const CodeEditor = () => {
@@ -21,7 +21,7 @@ const CodeEditor = () => {
   const [codeOutput, setCodeOutput] = useState<string>()
   const [outputState, setOutputState] = useState<string>()
   
-  const { sendMessage , messages } = useWebSocket<SocketCodeReq,SocketCodeRes>("/pg/code_execute")
+  const { sendMessage , messages } = useWebSocket<PlaygroundCodeReq,PlaygroundCodeRes>("/pg/code_execute")
 
   //  make  a comp later
   const languageOptions = [
