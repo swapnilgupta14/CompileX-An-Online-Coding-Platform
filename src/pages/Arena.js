@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Dropdown from '../components/common/Dropdown';
 import dynamic from 'next/dynamic';
 import OutputPanel from '../components/common/OutputPanel';
+import { BsTextarea } from 'react-icons/bs';
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 const ProblemDisplay = ({ problem }) => (
@@ -189,10 +190,14 @@ const Arena = () => {
                             </div>
                             {activeTab === 'output' && (
                                 <div className="outputStyle">
+                                    {/* <div>
+                                    // <p>
+                                    // </p>
+                                    </div> */}
                                     <div className="contentStyle">
-                                        <div className="outputAreaStyle">
+                                        <textarea className="outputAreaStyle">
                                             Your output will appear here...
-                                        </div>
+                                        </textarea>
                                     </div>
                                 </div>
                             )}
