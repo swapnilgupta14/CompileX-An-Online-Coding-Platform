@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Dropdown from '../components/common/Dropdown';
 import dynamic from 'next/dynamic';
 import OutputPanel from '../components/common/OutputPanel';
+import { BsTextarea } from 'react-icons/bs';
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 const ProblemDisplay = ({ problem }) => (
@@ -28,6 +29,8 @@ const Arena = () => {
     const [theme, setTheme] = useState('vs-dark');
     const [language, setLanguage] = useState('cpp');
     const [fontSize, setFontSize] = useState(16);
+    const [activeTab, setActiveTab] = useState('output');
+    const [activeTestTab, setActiveTestTab] = useState(1);
 
     const handleThemeChange = (e) => setTheme(e.target.value);
 
@@ -66,7 +69,25 @@ const Arena = () => {
             p_difficulty: 0,
             p_constraints: '1 <= nums.length <= 10^4',
             p_input: 'nums = [2,7,11,15], target = 9',
-            p_output: '[0,1]'
+            p_output: '[0,1]',
+        },
+    ];
+
+    const dummyTestCases = [
+        {
+            input: 'nums = [2,7,11,15], target = 9',
+            output: '[0,1]',
+            expected: '[0,1]',
+        },
+        {
+            input: 'nums = [3,2,4], target = 6',
+            output: '[1,2]',
+            expected: '[1,2]',
+        },
+        {
+            input: 'nums = [3,3], target = 6',
+            output: '[0,1]',
+            expected: '[0,1]',
         },
     ];
 
@@ -93,7 +114,7 @@ const Arena = () => {
     ];
 
     const handleCodeChange = (value) => setCode(value);
-    useEffect( () => {
+    useEffect(() => {
         console.log(JSON.stringify(code));
     }, [code]);
 
@@ -114,8 +135,8 @@ const Arena = () => {
                     {dummyProblem.map((problem, index) => (
                         <div key={index} className="test-case">
                             <h4>Test Case {index + 1}</h4>
-                            <p>Input: {problem.p_input || 'N/A'}</p>
-                            <p>Output: {problem.p_output || 'N/A'}</p>
+                            <p>Input: {problem.p_input || 'N//A'}</p>
+                            <p>Output: {problem.p_output || 'n/a'}</p>
                         </div>
                     ))}
 
@@ -151,23 +172,68 @@ const Arena = () => {
                     </div>
                     {/* <div className="output"> */}
                     <div className="containerStyle-arena">
-                        <div className="customTestCases-arena" id="customTestCases">
-                            <h2>Custom Test Cases</h2>
-                            <div className="contentStyle">
-                                <textarea
-                                    className="outputAreaStyle"
-                                    placeholder="Enter your test cases here..."
-                                ></textarea>
-                            </div>
-                        </div>
 
-                        <div className="outputStyle">
-                            <h2>Console Output</h2>
-                            <div className="contentStyle">
-                                <div className="outputAreaStyle">
-                                    Your output will appear here...
-                                </div>
+                        <div className="tabContent">
+                            <div className="tabs">
+                                <button
+                                    className={`tabButton ${activeTab === 'output' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('output')}
+                                >
+                                    Console Output
+                                </button>
+                                <button
+                                    className={`tabButton ${activeTab === 'testcases' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('testcases')}
+                                >
+                                    Custom Test Cases
+                                </button>
                             </div>
+                            {activeTab === 'output' && (
+                                <div className="outputStyle">
+                                    {/* <div>
+                                    // <p>
+                                    // </p>
+                                    </div> */}
+                                    <div className="contentStyle">
+                                        <textarea className="outputAreaStyle">
+                                            Your output will appear here...
+                                        </textarea>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'testcases' && (
+                                <div className="customTestCases-arena">
+                                    <div className="tabs">
+                                        {dummyTestCases.map((item, index) => (
+                                            <div key={index} className="tab" onClick={() => setActiveTestTab(index)}>
+                                                <input
+                                                    type="radio"
+                                                    id={`tab-${index}`}
+                                                    name="testCaseTabs"
+                                                    defaultChecked={index === 1}
+                                                />
+                                                <label>Test Case {index + 1}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div key={activeTestTab} className="tab-content" style={{ display: `tab-${activeTestTab}` === `tab-1` ? 'block' : 'none' }}>
+                                        <div className="testCaseField">
+                                            <label>Input:</label>
+                                            <input type="text" value={dummyTestCases[activeTestTab].input} />
+                                        </div>
+                                        <div className="testCaseField">
+                                            <label>Code Output:</label>
+                                            <input type="text" value={dummyTestCases[activeTestTab].output} />
+                                        </div>
+                                        <div className="testCaseField">
+                                            <label>Expected Result:</label>
+                                            <input type="text" value={dummyTestCases[activeTestTab].expected} />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                         </div>
                     </div>
                     {/* </div> */}
