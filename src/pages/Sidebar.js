@@ -14,7 +14,6 @@ const Sidebar = () => {
     ];
 
     const userItems = [
-        { icon: <FaTerminal size={20} />, label: 'Terminal' },
         { icon: <FaUser size={20} />, label: 'Profile' },
         { icon: <FaCog size={20} />, label: 'Settings' },
     ];
@@ -42,7 +41,7 @@ const Sidebar = () => {
                     </div>
                 ))}
             </div>
-            <div className="sidebar-icon toggle">
+            <div className="sidebar-menu">
                 {userItems.map((item, index) => (
                     <div
                         key={index}
