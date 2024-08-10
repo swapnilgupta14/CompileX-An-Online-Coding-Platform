@@ -1,34 +1,58 @@
 // styles/OutputPanel.module.scss
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; // Space between the two panels
-  }
-  
-  .customTestCases, .output {
-    flex: 1; // Each panel takes up equal width
-    padding: 20px;
-    box-sizing: border-box; // Include padding and border in the element's total width and height
-    background-color: #f9f9f9; // Light background color for the panels
-    border: 1px solid #ddd; // Light border color
-  }
-  
-  .customTestCases {
-    margin-right: 10px; // Space to the right of the custom test cases panel
-  }
-  
-  .output {
-    margin-left: 10px; // Space to the left of the output panel
-  }
-  
-  h2 {
-    margin-top: 0; // Remove top margin from headings
-  }
-  
-  .customTestCase, .outputContent {
-    padding: 10px;
-    border: 1px solid #ddd; // Border for inner content
-    background-color: #fff; // White background color for inner content
-  }
-  
+.containerStyle {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0.2rem 1rem 1rem 1rem;
+  background-color: $background-color;
+  // background-color: red;
+  border-radius: 0.5rem;
+  height: 100%;
+}
+
+.customTestCasesStyle, .outputStyle {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: $border-radius;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+  color: $primary-color;
+}
+
+.contentStyle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.textAreaStyle {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.outputAreaStyle {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  white-space: pre-wrap;
+}
