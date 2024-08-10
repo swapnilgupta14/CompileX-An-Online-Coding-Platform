@@ -5,6 +5,8 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
 import dynamic from 'next/dynamic';
+import useWebSocket from "../utils/useWebSocket";
+import {SocketCodeReq, SocketCodeRes} from "../types/Socket";
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 const CodeEditor = () => {
@@ -13,9 +15,13 @@ const CodeEditor = () => {
   const [theme, setTheme] = useState('vs-dark');
   const [language, setLanguage] = useState('cpp');
   const [fontSize, setFontSize] = useState(16);
-  const [outputVisible, setOutputVisible] = useState(true);
+  const [outputVisible, setOutputVisible] = useState(false);
   const [code, setCode] = useState('// Start coding here!');
-
+  const [codeInput, setCodeInput] = useState("")
+  const [codeOutput, setCodeOutput] = useState<string>()
+  const [outputState, setOutputState] = useState<string>()
+  
+  const { sendMessage , messages } = useWebSocket<SocketCodeReq,SocketCodeRes>("/pg/code_execute")
 
   //  make  a comp later
   const languageOptions = [
@@ -61,14 +67,47 @@ const CodeEditor = () => {
   };
 
   const handleFontSizeChange = (e) => setFontSize(parseInt(e.target.value));
-  const toggleOutput = () => setOutputVisible(!outputVisible);
+  const toggleOutput = () =>{
+    setOutputVisible(!outputVisible)
+  };
 
   // 
 
   const handleCodeChange = (value) => setCode(value);
-    useEffect( () => {
-        console.log(JSON.stringify(code));
-    }, [code]);
+
+  useEffect( () => {
+      console.log(JSON.stringify(code));
+  }, [code]);
+
+  const handleSubmit = () =>{
+    console.log(code,codeInput);
+    setCodeOutput("Loading")
+    setOutputState("LOADING")
+    sendMessage({
+      code: code,
+      input : codeInput
+    })
+  }
+
+  useEffect(() => {
+    const data = messages;
+    if(data){
+      console.log("details" in data.responseData.data)
+      console.log("output" in data.responseData.data)
+
+      if(data.responseData.error && "details" in data.responseData.data){
+        setCodeOutput(data.responseData.data.message)
+        setOutputState("ERROR")
+      }else if(data.responseData && "output" in data.responseData.data){
+        setCodeOutput(data.responseData.data.output)
+        setOutputState("SUCCESS")
+      }else{
+        setCodeOutput("Some error occurred")
+        setOutputState("ERROR")
+      }
+    }
+  }, [messages]);
+
 
   return (
     <div className="code-editor-container">
@@ -87,19 +126,25 @@ const CodeEditor = () => {
           </div>
         </div>
 
-        <div className={`editor-section ${outputVisible ? 'with-output' : ''}`}>
+        <div className={`editor-section px-4 flex flex-col gap-2`}>
           <MonacoEditor
             height="50vh"
             width="100%"
             theme={theme}
             language={language}
             value={code}
+            onChange={setCode}
             options={{
               fontSize, 
               minimap: { enabled: false },
               automaticLayout: true,
             }}
           />
+          <div>
+            <textarea placeholder={"input"} className={`w-full bg-gray-100 p-2 rounded-md border-2`} onChange={(e)=>{setCodeInput(e.target.value)}} rows={3} style={{
+              resize: 'none',
+            }}/>
+          </div>
         </div>
 
         <div className="bottom-bar">
@@ -109,7 +154,7 @@ const CodeEditor = () => {
             </button>
           </div>
           <div className="bottom-bar-right">
-            <button onClick={() => alert('Run code')}>Run</button>
+            <button onClick={handleSubmit}>Run</button>
           </div>
         </div>
       </>
@@ -118,6 +163,8 @@ const CodeEditor = () => {
         <>
           <OutputPanel
             type={'playground'}
+            value={codeOutput}
+            outputState={outputState}
           />
         </>
       )}

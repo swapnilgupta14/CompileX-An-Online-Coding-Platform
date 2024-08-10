@@ -3,20 +3,11 @@ import { useRouter } from 'next/router';
 import {QUESTION_DIFFICULTY} from "../utils/Static";
 import Link from "next/link";
 import ProblemAPI from "../utils/ProblemAPI";
-import useWebSocket from "../utils/useWebSocket";
 
 const Home = () => {
   const router = useRouter();
   const [questionArr, setQuestionArr] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-
-  const {sendMessage} = useWebSocket("/pg/code_execute")
-
-  sendMessage({
-        "code": "#include <iostream>\n\nint main() {\n    int num1, num2, sum;\n    std::cin >> num1;\n    std::cin >> num2;\n\n    // Calculating the sum\n    sum = num1 + num2;\n\n    // Displaying the result\n    std::cout << \"The sum is: \" << sum << std::endl;\n\n    return 0;\n}\n",
-        "input": "4\n5"
-      }
-  )
 
   useEffect(() => {
     ProblemAPI.problemGet().then((data) => {

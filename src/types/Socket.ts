@@ -4,7 +4,17 @@ export interface SocketCodeReq {
 }
 
 export interface SocketCodeRes {
-    error : string
-    message : string
-    output : string
+    error: boolean;
+    responseData: {
+        error: string;
+        data:{
+            exec_time: number;
+            message: string;
+            output: string;
+        }|{
+            details: string,
+            message : string,
+        }
+    }
+    status: number;
 }
