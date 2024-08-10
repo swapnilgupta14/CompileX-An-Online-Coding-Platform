@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import Dropdown from '../components/common/Dropdown';
+import Dropdown from '../../components/common/Dropdown';
 import dynamic from 'next/dynamic';
-import OutputPanel from '../components/common/OutputPanel';
+import OutputPanel from '../../components/common/OutputPanel';
 import { BsTextarea } from 'react-icons/bs';
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
@@ -37,20 +37,6 @@ const Arena = () => {
     const handleLanguageChange = (e) => {
         const selectedLanguage = e.target.value;
         setLanguage(selectedLanguage);
-
-        switch (selectedLanguage) {
-            case 'cpp':
-                setFilename('main.cpp');
-                break;
-            case 'python':
-                setFilename('main.py');
-                break;
-            case 'javascript':
-                setFilename('main.js');
-                break;
-            default:
-                setFilename('main.cpp');
-        }
     };
 
     const handleFontSizeChange = (e) => setFontSize(parseInt(e.target.value));

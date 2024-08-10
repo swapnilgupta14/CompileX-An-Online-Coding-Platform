@@ -1,5 +1,5 @@
 import {AxiosInstance} from "./axiosInstance";
-import {ApiResponse, ApiResponseFormatted, ProblemGetData} from "../types/API";
+import {ApiResponse, ApiResponseFormatted, ProblemGetData, testcaseType} from "../types/API";
 
 interface problemCreate {
     p_title : string ,
@@ -21,19 +21,12 @@ const problemDelete = async (data:{p_id:string}) => {
     return AxiosInstance.delete("/arena/delete_problem/",{ data }).then((res)=>res.data) as Promise<ApiResponse>;
 }
 
-interface testcaseType{
-    p_id : string ,
-    input_case : string ,
-    output_case : string ,
-    is_public : boolean ,
-}
-
 const testcaseAdd = async (data:testcaseType) => {
-    return AxiosInstance.post("/arena/add_testcase/",{ data }).then((res)=>res.data) as Promise<ApiResponse>;
+    return AxiosInstance.post("/arena/add_testcase/",data).then((res)=>res.data) as Promise<ApiResponse>;
 }
 
-const testcaseGet = async (data:testcaseType) => {
-    return AxiosInstance.post("/arena/get_testcase/",{ data }).then((res)=>res.data) as Promise<ApiResponseFormatted<testcaseType>>;
+const testcaseGet = async (data:{p_id:string}) => {
+    return AxiosInstance.get(`/arena/get_testcase/?pid=${data.p_id}`).then((res)=>res.data) as Promise<ApiResponseFormatted<testcaseType[]>>;
 }
 const testcaseDelete = async (data:{p_id:string}) => {
     return AxiosInstance.post("/arena/delete_testcase/",{ data }).then((res)=>res.data) as Promise<ApiResponse>;

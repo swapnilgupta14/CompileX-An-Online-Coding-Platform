@@ -1,23 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
-import {QUESTION_DIFFICULTY} from "../../utils/Static";
+import {QUESTION_DIFFICULTY} from "../utils/Static";
 import Link from "next/link";
-import ProblemAPI from "../../utils/ProblemAPI";
-import useWebSocket from "../../utils/useWebSocket";
+import ProblemAPI from "../utils/ProblemAPI";
+import useWebSocket from "../utils/useWebSocket";
 
 const Home = () => {
   const router = useRouter();
-  const [questionArr, setQuestionArr] = useState([
-    {
-      "p_id": "p_62a4c1dd10189cbe051864ba9640a2e9",
-      "p_title": "Introduction to C++",
-      "p_content": "This is a beginner-friendly guide to C++ programming, covering basic concepts such as variables, data types, loops, and functions.",
-      "p_author": "John Doe",
-      "p_likes": 0,
-      "p_difficulty": 1,
-      "created_at": "2024-08-10T13:16:31.762228Z"
-    }
-  ])
+  const [questionArr, setQuestionArr] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const {sendMessage} = useWebSocket("/pg/code_execute")
 
@@ -29,7 +20,8 @@ const Home = () => {
 
   useEffect(() => {
     ProblemAPI.problemGet().then((data) => {
-      console.log(data)
+      setQuestionArr(data.responseData.results)
+      setIsLoading(false)
     })
   }, []);
 
@@ -44,16 +36,24 @@ const Home = () => {
 
             <span className={`text-xl font-semibold`}>Questions</span>
 
-            <span className={`p-2 rounded-full bg-sky-100`}>
+            <Link href={"/Question/add"} className={`p-2 rounded-full bg-sky-100`}>
               <i className="fi fi-br-plus"></i>
-            </span>
+            </Link>
           </div>
 
           {
-            questionArr.map((question, index) => (
-                <Link href={`/question/edit/${question.p_id}`} className={`flex w-full flex-col gap-2 p-2 bg-gray-100 rounded-md`} key={`data-${question.p_id}`}>
-                  <div>
+            questionArr.length !== 0 ? questionArr.map((question, index) => (
+                <div className={`flex w-full flex-col gap-2 p-2 bg-gray-100 rounded-md`} key={`data-${question.p_id}`}>
+                  <div className={`flex justify-between items-center`}>
                     <span>{question.p_title}</span>
+                    <div className={`flex gap-2`}>
+                      <Link href={`Question/testcase/${question.p_id}`} className={`p-1 rounded-md bg-white`}>
+                        <i className="fi fi-tr-memo-circle-check"></i>
+                      </Link>
+                      <Link href={`Arena/${question.p_id}`} className={`p-1 rounded-md bg-white text-green-500`}>
+                        <i className="fi fi-br-check"></i>
+                      </Link>
+                    </div>
                   </div>
                   <div className={`flex w-full justify-between`}>
                     <span className={`flex justify-center items-center gap-2`}>
@@ -63,8 +63,20 @@ const Home = () => {
                     <span>{question.created_at}</span>
                     <span className={`px-1 ${QUESTION_DIFFICULTY[question.p_difficulty].style}`}>{QUESTION_DIFFICULTY[question.p_difficulty].Title}</span>
                   </div>
-                </Link>
-            ))
+                </div>
+            )) : isLoading ? (
+                <>
+                  <div className={`flex justify-center items-center gap-2`}>
+                    <span>Loading</span>
+                  </div>
+                </>
+            ):  (
+                <>
+                  <div className={`flex justify-center items-center gap-2`}>
+                    <span>No questions to show</span>
+                  </div>
+                </>
+            )
           }
         </div>
       </div>

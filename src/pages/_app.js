@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import '../styles/global.scss';
-
 
 function MyApp({ Component, pageProps }) {
   return (
