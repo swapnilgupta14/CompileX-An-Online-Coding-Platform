@@ -1,0 +1,31 @@
+@import './variables';
+@import './common/Dropdown.scss';
+@import './components/CodeEditor.scss';
+@import './components/Sidebar.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Josefin Sans', sans-serif, Arial !important;
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.main-container{
+  display: flex;
+  height: 100vh;
+}

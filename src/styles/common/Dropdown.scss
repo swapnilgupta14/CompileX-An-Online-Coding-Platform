@@ -1,0 +1,21 @@
+select {
+  padding: 6px 6px;
+  border: 1px solid #ccc;
+  font-weight: 600;
+  border-radius: $border-radius;
+  background-color: $background-color;
+  font-size: 0.9rem;
+  color: $primary-color;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    border-color: $primary-color;
+    background-color: $background-color-hover;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $accent-color;
+  }
+}
