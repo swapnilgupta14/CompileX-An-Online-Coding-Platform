@@ -76,8 +76,8 @@ const Arena = () => {
     ];
 
     const themeOptions = [
-        { value: 'light', label: 'Light' },
         { value: 'vs-dark', label: 'Dark' },
+        { value: 'light', label: 'Light' },
         { value: 'hc-black', label: 'High Contrast' },
         { value: 'vs', label: 'Visual Studio' },
     ];

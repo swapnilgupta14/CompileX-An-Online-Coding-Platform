@@ -22,26 +22,9 @@ const CodeEditor = () => {
   ];
 
   const themeOptions = [
-    { value: 'light', label: 'Light' },
     { value: 'vs-dark', label: 'Dark' },
+    { value: 'light', label: 'Light' },
     { value: 'hc-black', label: 'High Contrast' },
-    { value: 'vs', label: 'Visual Studio' },
-    { value: 'kimbie.dark', label: 'Kimbie Dark' },
-    { value: 'monokai', label: 'Monokai' },
-    { value: 'solarized-light', label: 'Solarized Light' },
-    { value: 'solarized-dark', label: 'Solarized Dark' },
-    { value: 'github', label: 'GitHub' },
-    { value: 'twilight', label: 'Twilight' },
-    { value: 'romantica', label: 'Romantica' },
-    { value: 'dracula', label: 'Dracula' },
-    { value: 'nord', label: 'Nord' },
-    { value: 'one-dark-pro', label: 'One Dark Pro' },
-    { value: 'cobalt', label: 'Cobalt' },
-    { value: 'ayu-light', label: 'Ayu Light' },
-    { value: 'ayu-dark', label: 'Ayu Dark' },
-    { value: 'material', label: 'Material' },
-    { value: 'material-darker', label: 'Material Darker' },
-    { value: 'oceanic-next', label: 'Oceanic Next' }
   ];
 
   const fontSizeOptions = [
