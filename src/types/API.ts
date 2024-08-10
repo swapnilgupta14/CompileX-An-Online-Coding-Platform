@@ -17,11 +17,11 @@ export interface ProblemGetData {
     results: Problem[];
 }
 
-interface testcasesTypes{
+export interface testcaseType{
     input_case: string,
     output_case: string
     is_public: boolean,
-    id: number
+    p_id: string
 }
 
 export interface Problem {

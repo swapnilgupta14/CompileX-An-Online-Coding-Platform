@@ -6,7 +6,7 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/Editor');
+    router.replace('/Home');
   }, [router]);
 
   return null; 

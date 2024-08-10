@@ -7,7 +7,7 @@ const Sidebar = () => {
     const router = useRouter();
 
     const menuItems = [
-        { icon: <FaTasks size={20} />, label: 'Dashboard', path: '/Dashboard/Home' },
+        { icon: <FaTasks size={20} />, label: 'Dashboard', path: '/' },
         { icon: <FaCode size={20} />, label: 'Code Editor', path: '/Editor' },
         { icon: <FaGamepad size={20} />, label: 'Battleground', path: '/#' },
         { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '/#' },
