@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Dropdown from '../components/common/Dropdown';
@@ -24,7 +24,8 @@ const ProblemDisplay = ({ problem }) => (
 
 const Arena = () => {
     const router = useRouter();
-    const [theme, setTheme] = useState('light');
+    const [code, setCode] = useState('// Start coding here!');
+    const [theme, setTheme] = useState('vs-dark');
     const [language, setLanguage] = useState('cpp');
     const [fontSize, setFontSize] = useState(16);
 
@@ -91,6 +92,11 @@ const Arena = () => {
         { value: 24, label: '24px' },
     ];
 
+    const handleCodeChange = (value) => setCode(value);
+    useEffect( () => {
+        console.log(JSON.stringify(code));
+    }, [code]);
+
     return (
         <div className="arena-container">
             <header className="header">
@@ -132,7 +138,7 @@ const Arena = () => {
                     <div className="editor">
                         <MonacoEditor
                             width="100%"
-                            value="// Start coding here!"
+                            value={code}
                             theme={theme}
                             language={language}
                             options={{
@@ -140,6 +146,7 @@ const Arena = () => {
                                 minimap: { enabled: false },
                                 automaticLayout: true,
                             }}
+                            onChange={handleCodeChange}
                         />
                     </div>
                     {/* <div className="output"> */}

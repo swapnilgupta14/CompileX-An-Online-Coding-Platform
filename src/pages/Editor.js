@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dropdown from '../components/common/Dropdown';
 import OutputPanel from '../components/common/OutputPanel';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -10,11 +10,14 @@ const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false 
 const CodeEditor = () => {
   const router = useRouter();
   const [filename, setFilename] = useState('main.cpp');
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('vs-dark');
   const [language, setLanguage] = useState('cpp');
   const [fontSize, setFontSize] = useState(16);
   const [outputVisible, setOutputVisible] = useState(true);
+  const [code, setCode] = useState('// Start coding here!');
 
+
+  //  make  a comp later
   const languageOptions = [
     { value: 'cpp', label: 'C++' },
     { value: 'python', label: 'Python' },
@@ -60,6 +63,13 @@ const CodeEditor = () => {
   const handleFontSizeChange = (e) => setFontSize(parseInt(e.target.value));
   const toggleOutput = () => setOutputVisible(!outputVisible);
 
+  // 
+
+  const handleCodeChange = (value) => setCode(value);
+    useEffect( () => {
+        console.log(JSON.stringify(code));
+    }, [code]);
+
   return (
     <div className="code-editor-container">
       <header>
@@ -83,7 +93,7 @@ const CodeEditor = () => {
             width="100%"
             theme={theme}
             language={language}
-            value="// Start coding here!"
+            value={code}
             options={{
               fontSize, 
               minimap: { enabled: false },
