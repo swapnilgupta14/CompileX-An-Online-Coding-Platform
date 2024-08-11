@@ -7,16 +7,16 @@ import Dropdown from "../../../components/common/Dropdown";
 import OutputPanel from "../../../components/common/OutputPanel";
 import {testcaseType} from "../../../types/API";
 import {
-    ArenaCodeReq,
     ArenaCodeRes, BattleCodeRes,
     BattlegroundCodeReq,
     PlaygroundCodeReq,
     PlaygroundCodeRes
 } from "../../../types/Socket";
+
 import useWebSocket from "../../../utils/useWebSocket";
 import {ProblemDisplay} from "../../Arena/[id]";
-import ProblemAPI from "../../../utils/ProblemAPI";
 import LocalstorageHelper from "../../../utils/localstorage";
+import useLeaderBoardSocket from "../../../utils/useLeaderBoardSocket";
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 interface leaderboard {
@@ -174,13 +174,16 @@ const Arena = () => {
         if(room_id){
             BattleGroundAPIS.getQuestion({room_id}).then(res=>{
                 console.log(res.responseData)
-                if(res.responseData.length >= 1)
+                if (res.responseData && res.responseData.length >= 1)
                     setQuestionArr(res.responseData);
+                else{
+                    router.push("/")
+                }
             })
         }
     }, [room_id]);
 
-    const { sendMessage : leaderBoardGet , messages : leaderBoardData , isConnected} = useWebSocket<any,any>(`/battle/code_execute/${room_id}/`);
+    const { sendMessage : leaderBoardGet , messages : leaderBoardData , isConnected} = useLeaderBoardSocket<any,any>(`/battle/code_execute/${room_id}/`);
 
     useEffect(() => {
         leaderBoardGet({
@@ -258,7 +261,10 @@ const Arena = () => {
                     <div className={`ml-5 flex flex-col mt-10 gap-2`}>
                         {
                             questionArr.map((_, index) => (
-                                <button className={`bg-sky-100 p-1 rounded-md min-w-[40px] text-center ${index === currentQuesIndex ? "bg-amber-200" : ""}`} onClick={()=>{setCurrentQuesIndex(index)}}>{index+1}</button>
+                                <button key={`question-${index}`} className={`bg-sky-100 p-1 rounded-md min-w-[40px] text-center ${index === currentQuesIndex ? "bg-amber-200" : ""}`} onClick={()=>{
+                                    setCurrentQuesIndex(index)
+                                    setRunningCasesArr([]);
+                                }}>{index+1}</button>
                             ))
                         }
                     </div>
@@ -288,7 +294,7 @@ const Arena = () => {
                                                 <p>Input: </p>
                                                 <textarea
                                                     className={`flex bg-amber-50 w-full p-2 rounded-md resize-none`}
-                                                    value={problem.input_case || "N//A"}
+                                                    defaultValue={problem.input_case || "N//A"}
                                                     rows={
                                                         problem.input_case
                                                             ? problem.input_case.split("\n").length
@@ -300,7 +306,7 @@ const Arena = () => {
                                                 <p>Output: </p>
                                                 <textarea
                                                     className={`flex bg-amber-50 w-full p-2 rounded-md resize-none`}
-                                                    value={problem.output_case || "N//A"}
+                                                    defaultValue={problem.output_case || "N//A"}
                                                     rows={
                                                         problem.output_case
                                                             ? problem.output_case.split("\n").length
@@ -478,12 +484,17 @@ const TestCaseCard = ({data, index}:{data:ArenaCodeRes["responseData"][0],index:
                 <div className={`flex flex-col gap-2`}>
                     <div className={`flex flex-col gap-2`}>
                         <span>Input :</span>
-                        <textarea value={data.user_input} rows={data.user_input.split("\n").length} className={`resize-none px-1 py-1 rounded-md`}/>
+                        <textarea defaultValue={data.user_input} rows={data.user_input.split("\n").length}
+                                  className={`resize-none px-1 py-1 rounded-md`}/>
                     </div>
                     <div className={`flex flex-col gap-2`}>
                         <span>Output :</span>
-                        <textarea value={data.expected_out} rows={data.expected_out.split("\n").length}
+                        <textarea defaultValue={data.expected_out} rows={data.expected_out.split("\n").length}
                                   className={`resize-none px-1 py-1 rounded-md`}/>
+                    </div>
+                    <div className={`flex gap-2`}>
+                        <span>Runtime :</span>
+                        <textarea defaultValue={data.data.exec_time} rows={1} className={`resize-none px-1 py-1 rounded-md`}/>
                     </div>
                 </div>
             ) : (
