@@ -17,57 +17,64 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      <div className="home-container">
-        <header>
-          <h1>Dashboard</h1>
-        </header>
-        <div className={`p-4 flex flex-col gap-2`}>
-          <div className={`flex justify-between`}>
+      <>
+        <div className="home-container">
+          <header className="text-center mb-6">
+            <h1 className="text-4xl font-bold">Problems</h1>
+            <p className="text-lg text-gray-600">Solve challenges, enhance your skills</p>
+          </header>
 
-            <span className={`text-xl font-semibold`}>Questions</span>
+          <div className={`p-4 flex flex-col gap-4`}>
+            <div className={`flex justify-between items-center`}>
+              <span className={`text-2xl font-semibold`}>Questions</span>
 
-            <Link href={"/Question/add"} className={`p-2 rounded-full bg-sky-100`}>
-              <i className="fi fi-br-plus"></i>
-            </Link>
-          </div>
+              <Link href={"/Question/add"} className={`p-2 rounded-full bg-sky-100`}>
+                <i className="fi fi-br-plus"></i>
+              </Link>
+            </div>
 
-          {
-            questionArr.length !== 0 ? questionArr.map((question, index) => (
-                <div className={`flex w-full flex-col gap-2 p-2 bg-gray-100 rounded-md pl-6 pr-6`} key={`data-${question.p_id}`}>
-                  <div className={`flex justify-between items-center`}>
-                    <span>{question.p_title}</span>
-                    <div className={`flex gap-2`}>
-                      <Link href={`Question/testcase/${question.p_id}`} className={`p-1 rounded-md bg-white`}>
-                        <i className="fi fi-tr-memo-circle-check"></i>
-                      </Link>
-                      {/*<Link href={`Arena/${question.p_id}`} className={`p-1 rounded-md bg-white text-green-500`}>*/}
-                      {/*  <i className="fi fi-br-check"></i>*/}
-                      {/*</Link>*/}
+            {
+              questionArr.length !== 0 ? questionArr.map((question, index) => (
+                  <div className={`flex w-full flex-col gap-4 p-4 bg-gray-100 rounded-lg`} key={`data-${question.p_id}`}>
+                    <div className={`flex justify-between items-center`}>
+                      <div className="space-y-2">
+                        <div>
+                          <span className="text-xl font-semibold">{question.p_title}</span>
+                        </div>
+                      </div>
+                      <div className={`flex gap-4 items-center`}>
+                        <div className={`text-sm text-gray-500 mt-1`}>
+                          <span className={`px-4 py-2 ${QUESTION_DIFFICULTY[question.p_difficulty].style}`}>{QUESTION_DIFFICULTY[question.p_difficulty].Title}</span>
+                        </div>
+                        <Link href={`Question/testcase/${question.p_id}`} className={`p-2 rounded-md bg-green-500 text-white`}>
+                          <i className="fi fi-tr-memo-circle-check"></i>
+                        </Link>
+                        {/*<Link href={`Arena/${question.p_id}`} className={`p-1 px-2 rounded-md bg-green-500 text-white`}>*/}
+                        {/*  Solve Problem*/}
+                        {/*</Link>*/}
+                        {/*<div className={`flex gap-2 items-center`}>*/}
+                        {/*  <i className="fi fi-sr-heart text-red-500"></i>*/}
+                        {/*  <span>{question.p_likes}</span>*/}
+                        {/*</div>*/}
+                      </div>
+                    </div>
+                    <div className={`flex justify-between text-sm text-gray-600`}>
+                      <span>{question.created_at}</span>
                     </div>
                   </div>
-                  <div className={`flex w-full justify-between`}>
-                    <span>{question.created_at}</span>
-                    <span className={`px-1 ${QUESTION_DIFFICULTY[question.p_difficulty].style}`}>{QUESTION_DIFFICULTY[question.p_difficulty].Title}</span>
-                  </div>
-                </div>
-            )) : isLoading ? (
-                <>
+              )) : isLoading ? (
                   <div className={`flex justify-center items-center gap-2`}>
                     <span>Loading</span>
                   </div>
-                </>
-            ):  (
-                <>
+              ) : (
                   <div className={`flex justify-center items-center gap-2`}>
                     <span>No questions to show</span>
                   </div>
-                </>
-            )
-          }
+              )
+            }
+          </div>
         </div>
-      </div>
-    </>
+      </>
   )
 }
 
