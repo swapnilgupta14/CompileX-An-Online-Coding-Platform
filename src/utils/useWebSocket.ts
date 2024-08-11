@@ -2,20 +2,34 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 
 const useWebSocket = <Req,Res>(url:string) => {
     const socket = useRef(null);
-    const [isConnected, setIsConnected] = useState(false);
+    const [isConnected, setIsConnected] = useState({status:false , at:Date.now()});
     const [messages, setMessages] = useState<Res>();
+    const [sendData, setSendData] = useState<Req|"INITIAL">("INITIAL");
 
-    const addListeners = (message:Req) =>{
+    useEffect(() => {
+        return () => {
+            if (socket.current) {
+                socket.current.close();
+            }
+        };
+    }, []);
+
+    const addListeners = () => {
+        if (!socket.current) return;
+
         socket.current.onopen = () => {
-            setIsConnected(true);
+            setIsConnected({
+                status : true,
+                at : Date.now()
+            });
             console.log('WebSocket is open now.');
-            setTimeout(()=>{
-                socket.current.send(JSON.stringify(message));
-            },200)
         };
 
         socket.current.onclose = () => {
-            setIsConnected(false);
+            setIsConnected({
+                status:  false,
+                at : Date.now()
+            });
             console.log('WebSocket is closed now.');
         };
 
@@ -23,13 +37,20 @@ const useWebSocket = <Req,Res>(url:string) => {
             console.error('WebSocket encountered an error:', error);
         };
 
-        socket.current.onmessage = (event:any) => {
+        socket.current.onmessage = (event: MessageEvent) => {
             const data = JSON.parse(event.data) as Res;
             console.log('Received message', data);
             setMessages(data);
-            return false
         };
-    }
+    };
+
+    useEffect(() => {
+        if(socket.current?.readyState && sendData!= "INITIAL"){
+            console.log("SENDING")
+            socket.current.send(JSON.stringify(sendData));
+        }
+        console.log(socket.current , sendData)
+    }, [isConnected , sendData, socket.current]);
 
     const close = () =>{
         socket.current.close();
@@ -40,8 +61,8 @@ const useWebSocket = <Req,Res>(url:string) => {
             socket.current = new WebSocket(process.env["NEXT_PUBLIC_BACKEND_URL"] + localUrl );
         else
             socket.current = new WebSocket(process.env["NEXT_PUBLIC_BACKEND_URL"] + url);
-
-        addListeners(message)
+        addListeners()
+        setSendData(message)
     }
 
     return { isConnected, messages, sendMessage , close };

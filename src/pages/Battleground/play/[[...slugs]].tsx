@@ -16,6 +16,7 @@ import {
 import useWebSocket from "../../../utils/useWebSocket";
 import {ProblemDisplay} from "../../Arena/[id]";
 import ProblemAPI from "../../../utils/ProblemAPI";
+import LocalstorageHelper from "../../../utils/localstorage";
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 interface leaderboard {
@@ -41,7 +42,7 @@ const Arena = () => {
         }
     }, [router.query]);
 
-    const [codeArr, setCodeArr] = useState<string[]>(["// Start coding here!","// Start coding here!"]);
+    const [codeArr, setCodeArr] = useState<string[]>([]);
     const [theme, setTheme] = useState("vs-dark");
     const [language, setLanguage] = useState("cpp");
     const [fontSize, setFontSize] = useState(16);
@@ -209,9 +210,40 @@ const Arena = () => {
         }
     }, [currentQuesIndex , questionArr]);
 
+    useEffect( () => {
+        if(codeArr[currentQuesIndex] && questionArr[currentQuesIndex]){
+            const { setKey } = LocalstorageHelper(room_id);
+            setKey(codeArr);
+            console.log("CodeChanged")
+        }
+    }, [codeArr]);
+
+    useEffect(() => {
+        if(room_id){
+            const { getKey } = LocalstorageHelper(room_id);
+            const data = getKey()
+            if(data instanceof Array){
+                console.log(data)
+                setCodeArr(data)
+            }else{
+                const arr = questionArr.map((_)=>"// Start coding here!")
+                console.log(arr)
+                setCodeArr(arr)
+            }
+        }
+    }, [room_id,questionArr]);
+
     if(!router.query.slugs || router.query.slugs.length !== 2){
         return <>
             Page invalid
+        </>
+    }
+
+    if(questionArr.length === 0){
+        return <>
+            <div>
+                Loading...
+            </div>
         </>
     }
 
