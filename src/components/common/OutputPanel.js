@@ -28,7 +28,7 @@ const OutputPanel = ({ type, input, width, height, customStyles, value, outputSt
                 </div>
             )}
             <div className="outputStyle">
-                <h2>Console Output</h2>
+                {type !== 'arena' && (<h2>Console Output</h2>)}
                 <div className="contentStyle">
                     <textarea
                         className={`outputAreaStyle ${outputState === "SUCCESS" ? 'bg-sky-100' : outputState === "ERROR" ? 'bg-red-100' : 'bg-gray-100'}`}
