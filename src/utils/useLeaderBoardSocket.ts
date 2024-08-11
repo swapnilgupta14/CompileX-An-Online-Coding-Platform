@@ -39,9 +39,6 @@ const useWebSocket = <Req,Res>(url:string) => {
 
         socket.current.onmessage = (event: MessageEvent) => {
             const data = JSON.parse(event.data) as Res;
-            if((data as { event:string }).event === "leaderboard"){
-                return ""
-            }
             console.log('Received message', data);
             setMessages(data);
         };

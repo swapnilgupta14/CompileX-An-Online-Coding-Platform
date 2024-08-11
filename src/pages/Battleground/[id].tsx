@@ -16,7 +16,7 @@ const Arena = () => {
             room_id : router.query.id,
         }).then(res=>res.data) as ApiResponseFormatted<{ user_id?:string }>
 
-        if(response.responseData.user_id){
+        if(response.responseData?.user_id){
             router.push(`/Battleground/play/${router.query.id}/${response.responseData.user_id}`);
         }else{
             alert("Some error")
