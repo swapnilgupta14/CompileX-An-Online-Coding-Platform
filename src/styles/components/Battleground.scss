@@ -41,8 +41,8 @@
     box-shadow: 0 2px 4px rgba($primary-color, 0.1);
 
     .search-bar {
-      flex: 1; 
-      margin-right: 1rem; 
+      flex: 1;
+      margin-right: 1rem;
 
       input {
         width: 100%;
@@ -72,17 +72,18 @@
         padding: 0.3rem 0.8rem;
         border-radius: $border-radius;
         font-size: 15px;
+        width: fit-content;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.2s ease;
 
         &:hover {
           transform: scale(1.05);
-        //   color: $primary-color;
+          border: $accent-color 2px solid;
+          color: $primary-color;
         }
 
         &:focus {
-          outline: none;
-          box-shadow: 0 0 0 3px rgba($accent-color, 0.5);
+          border: $accent-color 2px solid;
         }
       }
 
