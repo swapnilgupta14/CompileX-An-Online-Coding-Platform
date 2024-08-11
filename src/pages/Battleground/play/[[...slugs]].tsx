@@ -197,6 +197,7 @@ const Arena = () => {
     useEffect(() => {
         if(questionArr[currentQuesIndex]) {
             console.log("TESTCASE")
+            setTestcases([]);
             BattleGroundAPIS.getTestcase({
                 p_id: questionArr[currentQuesIndex].p_id,
             }).then((res) => {
