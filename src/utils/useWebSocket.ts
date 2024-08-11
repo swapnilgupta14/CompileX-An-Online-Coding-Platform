@@ -35,8 +35,12 @@ const useWebSocket = <Req,Res>(url:string) => {
         socket.current.close();
     }
 
-    const sendMessage = async (message : Req) => {
-        socket.current = new WebSocket(process.env["NEXT_PUBLIC_BACKEND_URL"]+url);
+    const sendMessage = async (message : Req , localUrl ?:string) => {
+        if(localUrl)
+            socket.current = new WebSocket(process.env["NEXT_PUBLIC_BACKEND_URL"] + localUrl );
+        else
+            socket.current = new WebSocket(process.env["NEXT_PUBLIC_BACKEND_URL"] + url);
+
         addListeners(message)
     }
 

@@ -18,10 +18,18 @@ import {ProblemDisplay} from "../../Arena/[id]";
 import ProblemAPI from "../../../utils/ProblemAPI";
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
+interface leaderboard {
+    rank : number,
+    uid_name : string,
+    total_testcases_passed : number
+}
+
 const Arena = () => {
     const router = useRouter();
     const [questionArr, setQuestionArr] = useState<BattleGroundQues[]>([])
     const [currentQuesIndex, setCurrentQuesIndex] = useState(0)
+
+    const [leaderboardList, setLeaderboardList] = useState<leaderboard[]>([])
 
     const [room_id, setRoom_id] = useState(undefined)
     const [user_id, setUser_id] = useState(undefined)
@@ -57,10 +65,10 @@ const Arena = () => {
     const [detailsTabSelected, setDetailsTabSelected] = useState<"QUESTION"|"LEADERBOARD">("QUESTION")
 
     const { sendMessage: playgroundExecCode, messages: playgroundResult } =
-        useWebSocket<PlaygroundCodeReq, PlaygroundCodeRes>(`/battle/code_execute/${room_id}/`);
+        useWebSocket<PlaygroundCodeReq, PlaygroundCodeRes>(`/pg/code_execute`);
 
     const { sendMessage: battleExecCode, messages: questionResult } =
-        useWebSocket<BattlegroundCodeReq, BattleCodeRes>("/arena/code_execute");
+        useWebSocket<BattlegroundCodeReq, BattleCodeRes>(`/battle/code_execute/${room_id}/`);
 
     useEffect(() => {
         const data = playgroundResult;
@@ -83,13 +91,18 @@ const Arena = () => {
 
     useEffect(() => {
         console.log("RESULT",questionResult)
-        if (questionResult && !questionResult.error && questionResult.responseData instanceof Array) {
-            setRunningTestcaseState("OUTPUT");
-            setRunningCasesArr(questionResult.responseData);
-        }else if(questionResult && typeof questionResult.responseData === "string"){
-            setRunningTestcaseState("INITIAL");
-            setCodeOutput(questionResult.responseData);
-            setOutputState("ERROR");
+        if(questionResult && questionResult.event === "runner"){
+            if (!questionResult.error && questionResult.responseData instanceof Array) {
+                setRunningTestcaseState("OUTPUT");
+                setRunningCasesArr(questionResult.responseData);
+            }else if(typeof questionResult.responseData === "string"){
+                setRunningTestcaseState("INITIAL");
+                setCodeOutput(questionResult.responseData);
+                setOutputState("ERROR");
+            }
+        }else if(questionResult && questionResult.event === "leaderboard"){
+            console.log("leaderboard ",questionResult.responseData)
+            setLeaderboardList(questionResult.responseData as undefined as leaderboard[])
         }
     }, [questionResult]);
 
@@ -140,9 +153,18 @@ const Arena = () => {
             setActiveTab("output");
         } else {
             setRunningTestcaseState("LOADING");
+            setActiveTab("testOutput")
+            setCodeOutput("Loading")
+
+            console.log({
+                code: codeArr[currentQuesIndex],
+                p_id: questionArr[currentQuesIndex].p_id as string,
+                uid : user_id
+            })
+
             battleExecCode({
                 code: codeArr[currentQuesIndex],
-                p_id: router.query.id as string,
+                p_id: questionArr[currentQuesIndex].p_id as string,
                 uid : user_id
             });
         }
@@ -160,7 +182,7 @@ const Arena = () => {
         }
     }, [room_id]);
 
-    const { sendMessage : leaderBoardGet , messages : leaderBoardData , isConnected} = useWebSocket("/battle/code_execute/a76e8f7d-32fa-4a95-bac7-2109955bb290/");
+    const { sendMessage : leaderBoardGet , messages : leaderBoardData , isConnected} = useWebSocket(`/battle/code_execute/${room_id}/`);
 
     useEffect(() => {
         leaderBoardGet({
@@ -175,7 +197,7 @@ const Arena = () => {
     useEffect(() => {
         if(questionArr[currentQuesIndex]) {
             console.log("TESTCASE")
-            ProblemAPI.testcaseGet({
+            BattleGroundAPIS.getTestcase({
                 p_id: questionArr[currentQuesIndex].p_id,
             }).then((res) => {
                 console.log("TESTCASE", res)
@@ -203,7 +225,7 @@ const Arena = () => {
                     <div className={`ml-5 flex flex-col mt-10 gap-2`}>
                         {
                             questionArr.map((_, index) => (
-                                <button className={`bg-sky-100 p-1 rounded-md min-w-[40px] text-center`} onClick={()=>{setCurrentQuesIndex(index)}}>{index+1}</button>
+                                <button className={`bg-sky-100 p-1 rounded-md min-w-[40px] text-center ${index === currentQuesIndex ? "bg-amber-200" : ""}`} onClick={()=>{setCurrentQuesIndex(index)}}>{index+1}</button>
                             ))
                         }
                     </div>
@@ -262,7 +284,11 @@ const Arena = () => {
                                     :
                                 <>
                                     <div className={`flex flex-col`}>
-                                        <span>Leaderboard</span>
+                                        {
+                                            leaderboardList.length >=1 ?
+                                                leaderboardList.map((data)=> (<span>{data.uid_name}</span>)): (
+                                                    <span>Leaderboard</span>)
+                                        }
                                     </div>
                                 </>
                             }
