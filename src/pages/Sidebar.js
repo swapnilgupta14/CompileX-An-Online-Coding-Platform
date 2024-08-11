@@ -3,19 +3,19 @@ import { useRouter } from 'next/router';
 import { FaCode, FaTerminal, FaTasks, FaCommentDots, FaUser, FaCamera, FaCog, FaGamepad } from 'react-icons/fa';
 
 const Sidebar = () => {
-    const [activeIndex, setActiveIndex] = useState(1);
+    const [activeIndex, setActiveIndex] = useState(0);
     const router = useRouter();
 
     const menuItems = [
         { icon: <FaTasks size={20} />, label: 'Dashboard', path: '/' },
         { icon: <FaCode size={20} />, label: 'Code Editor', path: '/Editor' },
-        { icon: <FaGamepad size={20} />, label: 'Battleground', path: '/#' },
-        { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '/#' },
+        { icon: <FaGamepad size={20} />, label: 'Battleground', path: '/Battleground/Battleground' },
+        // { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '/#' },
     ];
 
     const userItems = [
-        { icon: <FaUser size={20} />, label: 'Profile' },
-        { icon: <FaCog size={20} />, label: 'Settings' },
+        { icon: <FaUser size={20} />, label: 'Profile - Soon to be implemented' },
+        { icon: <FaCog size={20} />, label: 'Settings - Soon to be implemented' },
     ];
 
     const handleNavigation = (index, path) => {
