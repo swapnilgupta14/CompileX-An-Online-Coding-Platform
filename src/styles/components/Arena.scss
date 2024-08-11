@@ -42,7 +42,7 @@
     .problem-column {
       flex: 2;
       background-color: white;
-      padding: 2rem;
+      padding: 1rem;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       overflow-y: auto;
@@ -89,13 +89,13 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        
+
         .tabs {
           display: flex;
           gap: 1rem;
           margin: 1rem 1rem 0 1rem;
           font-size: 0.9rem;
-          
+
           .tabButton {
             padding: 0.5rem 1rem;
             border: none;
@@ -109,44 +109,44 @@
               background-color: $accent-color;
               color: white;
             }
-            
+
             &:hover:not(.active) {
               background-color: #007bff;
               color: white;
             }
           }
         }
-        
+
         .tabContent {
           min-height: 29vh !important;
           border-radius: $border-radius;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          
+
           .outputStyle {
             box-shadow: none;
             h2 {
               margin-bottom: 0.5rem;
             }
-            
+
             .contentStyle {
               .outputAreaStyle {
                 min-height: 5rem;
               }
-              
+
               .testCase {
                 margin-bottom: 1rem;
-                
+
                 .testCaseField {
                   display: flex;
                   align-items: center;
                   gap: 10px;
                   margin-bottom: 0.5rem;
-                  
+
                   label {
                     font-weight: bold;
                     min-width: 100px;
                   }
-                  
+
                   input {
                     flex-grow: 1;
                     padding: 0.3rem;
@@ -157,7 +157,7 @@
               }
             }
           }
-          
+
           .customTestCases-arena {
             // max-width: 600px;
             // margin: auto;
@@ -165,26 +165,26 @@
             background-color: #f9f9f9;
             max-height: 22vh;
             overflow-y: scroll;
-          
+
             h2 {
               font-size: 1.4rem;
               margin-bottom: 16px;
               text-align: center;
             }
-          
+
             .tabs {
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               gap: 10px;
-          
+
               .tab {
                 flex: 1;
-          
+
                 input[type="radio"] {
                   display: none;
                 }
-          
+
                 label {
                   display: block;
                   padding: 8px 16px;
@@ -192,30 +192,30 @@
                   cursor: pointer;
                   border-radius: 4px;
                   text-align: center;
-          
+
                   &:hover {
                     background-color: #d0d0d0;
                   }
                 }
               }
             }
-          
+
             .tab-content {
               display: none;
               padding: 12px;
               border: 1px solid #e0e0e0;
               border-radius: 4px;
               margin-top: 8px;
-          
+
               .testCaseField {
                 margin-bottom: 12px;
-          
+
                 label {
                   display: block;
                   font-weight: bold;
                   margin-bottom: 4px;
                 }
-          
+
                 input {
                   width: 100%;
                   padding: 8px;
@@ -224,16 +224,16 @@
                 }
               }
             }
-          
+
             input:checked + label {
               background-color: #d0d0d0;
             }
-          
+
             input:checked + label + .tab-content {
               display: block;
               width: 100%;
             }
-          
+
             .addTestCaseButton {
               display: block;
               width: 100%;
@@ -245,7 +245,7 @@
               cursor: pointer;
               text-align: center;
               margin-top: 20px;
-          
+
               &:hover {
                 background-color: $accent-color;
               }
@@ -258,6 +258,7 @@
 }
 
 .problem {
+ 
   .problem-header {
     display: flex;
     align-items: center;

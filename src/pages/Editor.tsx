@@ -15,12 +15,11 @@ const CodeEditor = () => {
   const [theme, setTheme] = useState('vs-dark');
   const [language, setLanguage] = useState('cpp');
   const [fontSize, setFontSize] = useState(16);
-  const [outputVisible, setOutputVisible] = useState(false);
+  const [outputVisible, setOutputVisible] = useState(true);
   const [code, setCode] = useState('// Start coding here!');
   const [codeInput, setCodeInput] = useState("")
   const [codeOutput, setCodeOutput] = useState<string>()
   const [outputState, setOutputState] = useState<string>()
-  
   const { sendMessage , messages } = useWebSocket<PlaygroundCodeReq,PlaygroundCodeRes>("/pg/code_execute")
 
   //  make  a comp later
@@ -73,11 +72,11 @@ const CodeEditor = () => {
 
   // 
 
-  const handleCodeChange = (value) => setCode(value);
+  // const handleCodeChange = (value) => setCode(value);
 
-  useEffect( () => {
-      console.log(JSON.stringify(code));
-  }, [code]);
+  // useEffect( () => {
+  //     console.log(JSON.stringify(code));
+  // }, [code]);
 
   const handleSubmit = () =>{
     console.log(code,codeInput);
@@ -108,11 +107,15 @@ const CodeEditor = () => {
     }
   }, [messages]);
 
+  const handleCodeInputChange = (newInput: string) => {
+    setCodeInput(newInput);
+  };
+
 
   return (
     <div className="code-editor-container">
       <header>
-        <FaArrowLeft size={15} onClick={() => router.push('/Dashboard/Home')} />
+        <FaArrowLeft size={15} onClick={() => router.push('/Home')} />
         <h1>Playground</h1>
       </header>
 
@@ -126,9 +129,9 @@ const CodeEditor = () => {
           </div>
         </div>
 
-        <div className={`editor-section px-4 flex flex-col gap-2`}>
+        <div className={`editor-section ${outputVisible ? 'with-output' : ''} px-4 flex flex-col`}>
           <MonacoEditor
-            height="50vh"
+            height="100%"
             width="100%"
             theme={theme}
             language={language}
@@ -140,11 +143,11 @@ const CodeEditor = () => {
               automaticLayout: true,
             }}
           />
-          <div>
+          {/* <div>
             <textarea placeholder={"input"} className={`w-full bg-gray-100 p-2 rounded-md border-2`} onChange={(e)=>{setCodeInput(e.target.value)}} rows={3} style={{
               resize: 'none',
             }}/>
-          </div>
+          </div> */}
         </div>
 
         <div className="bottom-bar">
@@ -165,6 +168,8 @@ const CodeEditor = () => {
             type={'playground'}
             value={codeOutput}
             outputState={outputState}
+            input={codeInput}
+            onCodeInputChange={handleCodeInputChange}
           />
         </>
       )}

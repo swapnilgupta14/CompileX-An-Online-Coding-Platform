@@ -12,7 +12,7 @@
   header {
     display: flex;
     align-items: center;
-    padding: 16px 20px; 
+    padding: 16px 20px;
     background-color: #fafafa;
     border-bottom: 1px solid darken($background-color, 10%);
     color: $primary-color;
@@ -61,9 +61,16 @@
   .editor-section {
     flex-grow: 1;
     transition: height 0.3s ease;
+    background-color: $background-color;
+    border-radius: $border-radius;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 1rem 1rem 1rem;
+    height: 70vh;
 
     &.with-output {
       height: 50vh;
+      transition: height 0.3s ease;
     }
   }
 
@@ -73,7 +80,7 @@
     align-items: center;
     padding: 10px 16px;
     margin: 0 1rem;
-    background-color: #fafafa;
+    background-color: $background-color;
     border-top: 1px solid #e0e0e0;
     box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
 
