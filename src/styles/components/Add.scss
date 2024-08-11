@@ -11,10 +11,38 @@
   .header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 16px 20px;
     background-color: #fafafa;
     border-bottom: 1px solid darken($background-color, 10%);
     color: $primary-color;
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    button {
+      background-color: $primary-color;
+      color: white;
+      width: fit-content;
+      font-size: 16px;
+      padding: 0.3rem 0.5rem;
+      margin: 0;
+      border: none;
+
+      &:hover {
+        background-color: $accent-color;
+        color: white;
+        transform: scale(1.05);
+      }
+    }
 
     h1 {
       font-size: 1.2rem;
@@ -28,6 +56,24 @@
       &:hover {
         color: $accent-color;
       }
+    }
+  }
+
+  .add-question{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    // align-items: center;
+
+    .question-block {
+      margin: 2rem;
+      justify-content: center;
+        align-items: center;
+
+     .remove-button{
+        width: 93%;
+        margin-left: 5rem;
+     }
     }
   }
 }
