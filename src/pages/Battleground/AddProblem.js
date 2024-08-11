@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from 'next/router';
-import Add from "../Question/add";
+import CustomAdd from "./common/CustomAdd";
+import { addProblem } from "../../utils/battlefield-apis/b-api";
 
-const AddProblem = ({ RoomId, BattleName }) => {
+const AddProblem = () => {
     const router = useRouter();
     const id = router.query.RoomId;
     const [questions, setQuestions] = useState([{}]);
+
+    useEffect(() => {
+        if (questions.length === 0) {
+            setQuestions([{}]);
+        }
+    }, []);
 
     const handleAddQuestion = () => {
         if (questions.length < 4) {
@@ -14,9 +21,27 @@ const AddProblem = ({ RoomId, BattleName }) => {
         }
     };
 
-    const handleRemoveQuestion = (index) => {
-        if (questions.length > 1) {
-            setQuestions(questions.filter((_, i) => i !== index));
+    const handleQuestionSubmit = (questionData, index) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[index] = questionData;
+        setQuestions(updatedQuestions);
+    };
+
+    const handleQuestionRemove = (index) => {
+        const updatedQuestions = questions.filter((_, i) => i !== index);
+        setQuestions(updatedQuestions);
+    };
+
+    const handleSubmitAllQuestions = async () => {
+        try {
+            const results = await Promise.all(questions.map(async (question) => {
+                const { title, content, author, difficulty, roomId } = question;
+                const result = await addProblem(title, content, author, difficulty, roomId);
+                return result;
+            }));
+            console.log('All results:', results);
+        } catch (error) {
+            console.error('Error submitting all questions:', error);
         }
     };
 
@@ -31,22 +56,20 @@ const AddProblem = ({ RoomId, BattleName }) => {
                     {questions.length < 4 && (
                         <button onClick={handleAddQuestion}>Add Another Question</button>
                     )}
-                    {true && (
-                        <button>Submit Questions</button>
-                    )}
+                    <button onClick={handleSubmitAllQuestions}>Submit Questions</button>
                 </div>
             </header>
             <div className='add-question'>
                 {questions.map((_, index) => (
                     <div key={index} className="question-block">
-                        <Add />
-                        {questions.length > 1 && (
-                            <button className="remove-button" onClick={() => handleRemoveQuestion(index)}>Remove Question</button>
-                        )}
+                        <CustomAdd
+                            onSubmit={handleQuestionSubmit}
+                            onRemove={handleQuestionRemove}
+                            index={index}
+                        />
                     </div>
                 ))}
             </div>
-
         </div>
     );
 };
