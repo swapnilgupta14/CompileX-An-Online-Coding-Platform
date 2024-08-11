@@ -25,7 +25,8 @@ export interface ArenaCodeRes {
             exec_time: number
         },
         t_id: number,
-        expected_out: string,
+        expected_out ?: string,
+        user_input ?: string
         passed: boolean
     }[]
     status: number;
