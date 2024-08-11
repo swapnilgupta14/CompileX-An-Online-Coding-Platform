@@ -100,9 +100,6 @@ const Arena = () => {
                 setCodeOutput(questionResult.responseData);
                 setOutputState("ERROR");
             }
-        }else if(questionResult && questionResult.event === "leaderboard"){
-            console.log("leaderboard ",questionResult.responseData)
-            setLeaderboardList(questionResult.responseData as undefined as leaderboard[])
         }
     }, [questionResult]);
 
@@ -182,7 +179,7 @@ const Arena = () => {
         }
     }, [room_id]);
 
-    const { sendMessage : leaderBoardGet , messages : leaderBoardData , isConnected} = useWebSocket(`/battle/code_execute/${room_id}/`);
+    const { sendMessage : leaderBoardGet , messages : leaderBoardData , isConnected} = useWebSocket<any,any>(`/battle/code_execute/${room_id}/`);
 
     useEffect(() => {
         leaderBoardGet({
@@ -191,7 +188,10 @@ const Arena = () => {
     }, []);
 
     useEffect(() => {
-        console.log(leaderBoardData)
+        if(leaderBoardData && leaderBoardData.event === "leaderboard"){
+            console.log("leaderboard ",leaderBoardData.responseData)
+            setLeaderboardList(leaderBoardData.responseData as undefined as leaderboard[])
+        }
     }, [leaderBoardData]);
 
     useEffect(() => {
@@ -286,7 +286,10 @@ const Arena = () => {
                                     <div className={`flex flex-col`}>
                                         {
                                             leaderboardList.length >=1 ?
-                                                leaderboardList.map((data)=> (<span>{data.uid_name}</span>)): (
+                                                leaderboardList.map((data)=> (<div className={`bg-sky-100 px-2 py-1 rounded-md flex justify-between`}>
+                                                   <span> {data.uid_name}</span>
+                                                   <span> {data.total_testcases_passed}</span>
+                                                </div>)): (
                                                     <span>Leaderboard</span>)
                                         }
                                     </div>
