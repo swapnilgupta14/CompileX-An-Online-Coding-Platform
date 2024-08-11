@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from 'next/router';
+import CustomPopup from '../../components/common/CustomPopup';
 
 const Battleground = () => {
     const router = useRouter();
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [popupAction, setPopupAction] = useState('');
+
+    const openPopup = (content) => {
+        setPopupAction(content);
+        setIsPopupVisible(true);
+    };
+
+    const closePopup = () => {
+        setIsPopupVisible(false);
+        setPopupAction('');
+    };
 
     const [contests, setContests] = useState([
         { id: 1, name: 'Contest A', status: 'ongoing', endTime: '2024-08-10T14:30:00Z', linkLabel: 'Join' },
@@ -12,13 +25,7 @@ const Battleground = () => {
         { id: 3, name: 'Contest C', status: 'completed', endTime: '2024-08-08T18:00:00Z', linkLabel: 'See Result' },
     ]);
 
-    const createContest = () => {
-        // Logic for creating a contest
-        alert('Create Contest functionality goes here');
-    };
-
     const joinContest = (id) => {
-        // Logic for joining a contest
         alert(`Join Contest ${id} functionality goes here`);
     };
 
@@ -49,11 +56,18 @@ const Battleground = () => {
 
             <div className='battleground-bar'>
                 <div className="search-bar">
-                    <input type="text" placeholder="Search Contests..." />
+                    <input type="text" placeholder="Search Contests... (To be implemented)" />
                 </div>
-                <div className="contest-actions">
-                    <button onClick={createContest}>Create New Contest</button>
-                    <button className="join">Join Contest</button>
+                <div>
+                    <div className="contest-actions">
+                        <button onClick={() => openPopup('create')}>Create New Contest</button>
+                        <button className="join" onClick={() => openPopup('join')}>Join Contest</button>
+                    </div>
+                    <CustomPopup
+                        isVisible={isPopupVisible}
+                        onClose={closePopup}>
+                        {popupAction}
+                    </CustomPopup>
                 </div>
             </div>
 
