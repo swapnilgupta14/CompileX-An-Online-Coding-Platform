@@ -284,7 +284,7 @@ const Arena = () => {
                                 </>
                                     :
                                 <>
-                                    <div className={`flex flex-col`}>
+                                    <div className={`flex flex-col gap-2`}>
                                         {
                                             leaderboardList.length >=1 ?
                                                 leaderboardList.map((data)=> (<div className={`bg-sky-100 px-2 py-1 rounded-md flex justify-between`}>
@@ -392,21 +392,7 @@ const Arena = () => {
                                             {runningTestcaseState === "OUTPUT" &&
                                             runningCasesArr.length >= 1 ? (
                                                 runningCasesArr.map((testcase, index) => (
-                                                    <div
-                                                        className={`bg-gray-100 p-2 rounded-md flex justify-between`}
-                                                        key={index}
-                                                    >
-                                                        <div className={``}>
-                                                            <span>TESTCASE : {index + 1}</span>
-                                                        </div>
-                                                        <span className={`p-1 bg-white rounded-md`}>
-                              {testcase.passed ? (
-                                  <i className="fi fi-br-check text-green-500"></i>
-                              ) : (
-                                  <i className="fi fi-br-cross text-red-500"></i>
-                              )}
-                            </span>
-                                                    </div>
+                                                    <TestCaseCard key={index} data={testcase} index={index} />
                                                 ))
                                             ) : runningTestcaseState === "LOADING" ? (
                                                 <div>
@@ -431,3 +417,46 @@ const Arena = () => {
 };
 
 export default Arena;
+
+const TestCaseCard = ({data, index}:{data:ArenaCodeRes["responseData"][0],index:number}) => {
+
+    const [isOpened, setIsOpened] = useState(false)
+
+    return <div
+        className={`${data.passed ? "bg-blue-100" : "bg-red-100"} p-2 rounded-md flex justify-between flex-col`}
+        key={index}
+        onClick={()=>{setIsOpened(prev=>!prev)}}
+    >
+        <div className={`flex justify-between`}>
+            <div className={``}>
+                <span>TESTCASE : {index + 1}</span>
+            </div>
+
+            {
+                !data.expected_out && (
+                    <span className={`p-1 bg-white rounded-md`}>
+                    <i className="fi fi-rr-lock"></i>
+                </span>
+                )
+            }
+        </div>
+
+        {
+            isOpened && data.expected_out ? (
+                <div className={`flex flex-col gap-2`}>
+                    <div className={`flex flex-col gap-2`}>
+                        <span>Input :</span>
+                        <textarea value={data.user_input} rows={data.user_input.split("\n").length} className={`resize-none px-1 py-1 rounded-md`}/>
+                    </div>
+                    <div className={`flex flex-col gap-2`}>
+                        <span>Output :</span>
+                        <textarea value={data.expected_out} rows={data.expected_out.split("\n").length}
+                                  className={`resize-none px-1 py-1 rounded-md`}/>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )
+        }
+    </div>
+}
