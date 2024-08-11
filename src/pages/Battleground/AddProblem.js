@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from 'next/router';
 import CustomAdd from "./common/CustomAdd";
+import Testcase from './common/CustomTestAdd';
 import { addProblem } from "../../utils/battlefield-apis/b-api";
+import { addTestcase } from "../../utils/battlefield-apis/b-api";
 
 const AddProblem = () => {
     const router = useRouter();
     const id = router.query.RoomId;
-    const [questions, setQuestions] = useState([{}]);
-
-    useEffect(() => {
-        if (questions.length === 0) {
-            setQuestions([{}]);
-        }
-    }, []);
+    const [questions, setQuestions] = useState([{ testcases: [] }]);
 
     const handleAddQuestion = () => {
         if (questions.length < 4) {
-            setQuestions([...questions, {}]);
+            setQuestions([...questions, { testcases: [] }]);
         }
     };
 
@@ -32,16 +28,29 @@ const AddProblem = () => {
         setQuestions(updatedQuestions);
     };
 
+    const handleTestcaseUpdate = (problemIndex, updatedTestcases) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[problemIndex].testcases = updatedTestcases;
+        setQuestions(updatedQuestions);
+    };
+
     const handleSubmitAllQuestions = async () => {
         try {
-            const results = await Promise.all(questions.map(async (question) => {
-                const { title, content, author, difficulty, roomId } = question;
+            for (const question of questions) {
+                const { title, content, author, difficulty, roomId, testcases } = question;
                 const result = await addProblem(title, content, author, difficulty, roomId);
-                return result;
-            }));
-            console.log('All results:', results);
+                const problemId = result.responseData.p_id;
+
+                if (testcases && testcases.length > 0) {
+                    await Promise.all(testcases.map(async (testcase) => {
+                        await addTestcase(problemId, testcase.input_case, testcase.output_case, testcase.is_public);
+                    }));
+                }
+            }
+            alert('All problems and test cases submitted successfully!');
         } catch (error) {
             console.error('Error submitting all questions:', error);
+            alert('Error submitting problems or test cases.');
         }
     };
 
@@ -60,12 +69,17 @@ const AddProblem = () => {
                 </div>
             </header>
             <div className='add-question'>
-                {questions.map((_, index) => (
+                {questions.map((question, index) => (
                     <div key={index} className="question-block">
                         <CustomAdd
-                            onSubmit={handleQuestionSubmit}
-                            onRemove={handleQuestionRemove}
+                            onSubmit={(data) => handleQuestionSubmit(data, index)}
+                            onRemove={() => handleQuestionRemove(index)}
                             index={index}
+                        />
+                        <Testcase
+                            problemIndex={index}
+                            testcases={question.testcases}
+                            onTestcaseUpdate={handleTestcaseUpdate}
                         />
                     </div>
                 ))}
