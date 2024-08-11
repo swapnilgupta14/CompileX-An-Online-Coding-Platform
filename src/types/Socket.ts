@@ -3,6 +3,12 @@ export interface PlaygroundCodeReq {
     input : string
 }
 
+export interface BattlegroundCodeReq {
+    code : string
+    p_id : string
+    uid : string
+}
+
 export interface ArenaCodeReq {
     code : string
     p_id : string
@@ -22,6 +28,23 @@ export interface ArenaCodeRes {
         expected_out: string,
         passed: boolean
     }[]
+    status: number;
+}
+
+export interface BattleCodeRes {
+    error: boolean;
+    responseData: {
+        error: boolean,
+        data: {
+            message: string,
+            output: string,
+            error: string,
+            exec_time: number
+        },
+        t_id: number,
+        expected_out: string,
+        passed: boolean
+    }[] | string
     status: number;
 }
 

@@ -15,6 +15,8 @@ const Popup = ({ isVisible, onClose, children }) => {
 
   const handleJoin = () => {
     console.log('Joining contest with ID:', contestId);
+    if(contestId.length >= 10)
+    router.push(`/Battleground/${contestId}`)
     onClose();
   };
 
