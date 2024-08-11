@@ -109,10 +109,6 @@ const Popup = ({ isVisible, onClose, children }) => {
           )}
         </div>
       </div>
-      <AddProblem
-        RoomId={roomId}
-        BattleName={contestData.name}
-      />
     </>
   );
 };
