@@ -32,7 +32,7 @@ const testcaseAdd = async (data:testcaseType) => {
 }
 
 const testcaseGet = async (data:{p_id:string}) => {
-    return AxiosInstance.get(`/arena/get_testcase_battle/?pid=${data.p_id}`).then((res)=>res.data) as Promise<ApiResponseFormatted<testcaseType[]>>;
+    return AxiosInstance.get(`/arena/get_testcase/?pid=${data.p_id}`).then((res)=>res.data) as Promise<ApiResponseFormatted<testcaseType[]>>;
 }
 const testcaseDelete = async (data:{p_id:string}) => {
     return AxiosInstance.post("/arena/delete_testcase/",{ data }).then((res)=>res.data) as Promise<ApiResponse>;
