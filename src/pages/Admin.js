@@ -25,22 +25,25 @@ const Home = () => {
         <div className={`p-4 flex flex-col gap-2`}>
           <div className={`flex justify-between`}>
 
-            <span className={`text-[50px] font-semibold`}>Questions</span>
+            <span className={`text-xl font-semibold`}>Questions</span>
 
-            {/*<Link href={"/Question/add"} className={`p-2 rounded-full bg-sky-100`}>*/}
-            {/*  <i className="fi fi-br-plus"></i>*/}
-            {/*</Link>*/}
+            <Link href={"/Question/add"} className={`p-2 rounded-full bg-sky-100`}>
+              <i className="fi fi-br-plus"></i>
+            </Link>
           </div>
 
           {
             questionArr.length !== 0 ? questionArr.map((question, index) => (
                 <div className={`flex w-full flex-col gap-2 p-2 bg-gray-100 rounded-md pl-6 pr-6`} key={`data-${question.p_id}`}>
-                  <div className={`flex justify-between items-center text-2xl`}>
+                  <div className={`flex justify-between items-center`}>
                     <span>{question.p_title}</span>
                     <div className={`flex gap-2`}>
-                      <Link href={`Arena/${question.p_id}`} className={`p-1 rounded-md bg-white text-green-500`}>
-                        <i className="fi fi-br-check"></i>
+                      <Link href={`Question/testcase/${question.p_id}`} className={`p-1 rounded-md bg-white`}>
+                        <i className="fi fi-tr-memo-circle-check"></i>
                       </Link>
+                      {/*<Link href={`Arena/${question.p_id}`} className={`p-1 rounded-md bg-white text-green-500`}>*/}
+                      {/*  <i className="fi fi-br-check"></i>*/}
+                      {/*</Link>*/}
                     </div>
                   </div>
                   <div className={`flex w-full justify-between`}>
