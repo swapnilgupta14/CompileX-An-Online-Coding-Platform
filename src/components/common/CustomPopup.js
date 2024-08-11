@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { createRoom } from '../../utils/battlefield-apis/b-api';
-import {useRouter} from "next/router";
+import { createRoom } from '../../utils/battlefield-apis/b-api'; // Ensure this path is correct
+import { useRouter } from 'next/router';
+import Add from '../../pages/Battleground/Add';
 
 const Popup = ({ isVisible, onClose, children }) => {
   const router = useRouter();
-
   const [contestData, setContestData] = useState({
     name: '',
     startDateAndTime: '',
     endDateAndTime: '',
   });
   const [contestId, setContestId] = useState('');
+  const [roomId, setRoomId] = useState('');
 
   const handleJoin = () => {
     console.log('Joining contest with ID:', contestId);
@@ -19,21 +20,49 @@ const Popup = ({ isVisible, onClose, children }) => {
     onClose();
   };
 
-  if (!isVisible) return null;
+  const convertToUTC = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toISOString().slice(0, 19);
+  };
 
   const handleCreateContest = async () => {
     if (!contestData.name || !contestData.startDateAndTime || !contestData.endDateAndTime) {
       alert('Please fill all the fields');
       return;
     }
-    const result = await createContest(contestData.name, contestData.startDateAndTime, contestData.endDateAndTime);
-    console.log('Contest creation result:', result);
-    if (result.error) {
-      setError(result.responseData);
-    } else {
-      setSuccess('Contest created successfully!');
+
+    try {
+      const startDateUTC = convertToUTC(contestData.startDateAndTime);
+      const endDateUTC = convertToUTC(contestData.endDateAndTime);
+      const result = await createRoom(contestData.name,
+        startDateUTC,
+        endDateUTC);
+      console.log('Contest creation result:', result);
+      if(result){
+        const room_id = result.responseData.roomId;
+        if (room_id) {
+          setRoomId(room_id);
+          router.push(`/Battleground/Add?RoomId=${room_id}`);
+          <Add
+          RoomId={room_id}
+          BattleName={contestData.name}
+          />
+          onClose();
+        }
+        else {
+          console.log('Room ID not found');
+          return;
+        }
+        console.log('Contest created successfully', result);
+      }else{
+        console.log('Error creating battle:', result);
+      }
+    } catch (error) {
+      console.error('Error creating battle:', error);
     }
   };
+
+  if (!isVisible) return null;
 
   return (
     <div className={`popup-overlay ${isVisible ? 'visible' : ''}`}>
@@ -47,22 +76,23 @@ const Popup = ({ isVisible, onClose, children }) => {
               <input
                 type="text"
                 value={contestData.name}
-                onChange={(e) => setContestData({ ...contestData, name: e.target.value })}></input>
+                onChange={(e) => setContestData({ ...contestData, name: e.target.value })}
+              />
             </div>
             <div className="date-and-time">
               <h4>Enter Start Time</h4>
               <input
                 type="datetime-local"
-                value={contestData.date}
+                value={contestData.startDateAndTime}
                 onChange={(e) => setContestData({ ...contestData, startDateAndTime: e.target.value })}
                 min={new Date().toISOString().slice(0, 16)}
               />
               <h4>Enter End Time</h4>
               <input
                 type="datetime-local"
-                value={contestData.endTime}
+                value={contestData.endDateAndTime}
                 onChange={(e) => setContestData({ ...contestData, endDateAndTime: e.target.value })}
-                min={contestData.date}
+                min={contestData.startDateAndTime}
               />
             </div>
             <button onClick={handleCreateContest}>Create this Battle</button>
@@ -81,7 +111,7 @@ const Popup = ({ isVisible, onClose, children }) => {
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 };
 

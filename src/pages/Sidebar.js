@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router'; 
 import { FaCode, FaTerminal, FaTasks, FaCommentDots, FaUser, FaCamera, FaCog, FaGamepad } from 'react-icons/fa';
+import {FaC} from "react-icons/fa6";
 
 const Sidebar = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -8,7 +9,7 @@ const Sidebar = () => {
 
     const menuItems = [
         { icon: <FaTasks size={20} />, label: 'Dashboard', path: '/' },
-        { icon: <FaCode size={20} />, label: 'Code Editor', path: '/Editor' },
+        { icon: <FaCode size={20} />, label: 'PlayGround', path: '/Editor' },
         { icon: <FaGamepad size={20} />, label: 'Battleground', path: '/Battleground/Battles' },
         // { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '/#' },
     ];
@@ -26,7 +27,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="sidebar-icon logo">
-                <FaCamera size={30} />
+                <FaC size={30} />
             </div>
             <div className="sidebar-menu">
                 {menuItems.map((item, index) => (
@@ -45,10 +46,10 @@ const Sidebar = () => {
                 {userItems.map((item, index) => (
                     <div
                         key={index}
-                        className={`sidebar-icon`}
-                        title={item.label}
+                        // className={`sidebar-icon`}
+                        // title={item.label}
                     >
-                        {item.icon}
+                        {/*{item.icon}*/}
                     </div>
                 ))}
             </div>

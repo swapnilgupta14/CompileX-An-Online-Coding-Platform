@@ -28,9 +28,9 @@ const Home = () => {
             <div className={`flex justify-between items-center`}>
               <span className={`text-2xl font-semibold`}>Questions</span>
 
-              {/*<Link href={"/Question/add"} className={`p-2 rounded-full bg-sky-100`}>*/}
-              {/*  <i className="fi fi-br-plus"></i>*/}
-              {/*</Link>*/}
+              <Link href={"/Question/add"} className={`p-2 rounded-full bg-sky-100`}>
+                <i className="fi fi-br-plus"></i>
+              </Link>
             </div>
 
             {
@@ -46,12 +46,12 @@ const Home = () => {
                         <div className={`text-sm text-gray-500 mt-1`}>
                           <span className={`px-4 py-2 ${QUESTION_DIFFICULTY[question.p_difficulty].style}`}>{QUESTION_DIFFICULTY[question.p_difficulty].Title}</span>
                         </div>
-                        {/*<Link href={`Question/testcase/${question.p_id}`} className={`p-2 rounded-md bg-green-500 text-white`}>*/}
-                        {/*  <i className="fi fi-tr-memo-circle-check"></i>*/}
-                        {/*</Link>*/}
-                        <Link href={`Arena/${question.p_id}`} className={`p-1 px-2 rounded-md bg-green-500 text-white`}>
-                          Solve Problem
+                        <Link href={`Question/testcase/${question.p_id}`} className={`p-2 rounded-md bg-green-500 text-white`}>
+                          <i className="fi fi-tr-memo-circle-check"></i>
                         </Link>
+                        {/*<Link href={`Arena/${question.p_id}`} className={`p-1 px-2 rounded-md bg-green-500 text-white`}>*/}
+                        {/*  Solve Problem*/}
+                        {/*</Link>*/}
                         {/*<div className={`flex gap-2 items-center`}>*/}
                         {/*  <i className="fi fi-sr-heart text-red-500"></i>*/}
                         {/*  <span>{question.p_likes}</span>*/}
