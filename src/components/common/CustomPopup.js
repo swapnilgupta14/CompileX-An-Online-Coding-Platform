@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { createRoom } from '../../utils/battlefield-apis/b-api';
+import {useRouter} from "next/router";
 
 const Popup = ({ isVisible, onClose, children }) => {
+  const router = useRouter();
+
   const [contestData, setContestData] = useState({
     name: '',
     startDateAndTime: '',
@@ -11,6 +14,8 @@ const Popup = ({ isVisible, onClose, children }) => {
 
   const handleJoin = () => {
     console.log('Joining contest with ID:', contestId);
+    if(contestId.length >= 10)
+    router.push(`/Battleground/${contestId}`)
     onClose();
   };
 
