@@ -5,12 +5,13 @@ const useWebSocket = <Req,Res>(url:string) => {
     const [isConnected, setIsConnected] = useState(false);
     const [messages, setMessages] = useState<Res>();
 
-
     const addListeners = (message:Req) =>{
         socket.current.onopen = () => {
             setIsConnected(true);
             console.log('WebSocket is open now.');
-            socket.current.send(JSON.stringify(message));
+            setTimeout(()=>{
+                socket.current.send(JSON.stringify(message));
+            },200)
         };
 
         socket.current.onclose = () => {

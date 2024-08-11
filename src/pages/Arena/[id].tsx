@@ -19,7 +19,7 @@ const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
 });
 
-const ProblemDisplay = ({ problem }) => (
+export const ProblemDisplay = ({ problem }) => (
   <div className="problem">
     <div className="problem-header">
       <h2>{problem.p_title}</h2>
