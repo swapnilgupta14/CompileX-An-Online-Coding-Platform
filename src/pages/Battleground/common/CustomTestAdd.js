@@ -2,115 +2,96 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Testcase = ({ onTestcaseUpdate, testcases, problemIndex }) => {
-    const [inputCase, setInputCase] = useState('');
-    const [outputCase, setOutputCase] = useState('');
-    const [visibility, setVisibility] = useState('true');
+    const [currentTestcase, setCurrentTestcase] = useState({ input_case: '', output_case: '', is_public: false });
 
-    const handleAddTestcase = (e) => {
-        e.preventDefault();
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setCurrentTestcase({
+            ...currentTestcase,
+            [name]: type === 'checkbox' ? checked : value,
+        });
+    };
 
-        if (!inputCase || !outputCase) {
-            return alert("Please enter both input and output cases");
+    const handleAddTestcase = () => {
+        if (!currentTestcase.input_case || !currentTestcase.output_case) {
+            alert('Please provide both input and output for the testcase.');
+            return;
         }
-
-        const newTestcase = {
-            input_case: inputCase,
-            output_case: outputCase,
-            is_public: visibility === 'true',
-        };
-
-        const updatedTestcases = [...testcases, newTestcase];
+        const updatedTestcases = [...testcases, currentTestcase];
         onTestcaseUpdate(problemIndex, updatedTestcases);
-        setInputCase('');
-        setOutputCase('');
-        setVisibility('true');
+        setCurrentTestcase({ input_case: '', output_case: '', is_public: false });
+    };
+
+    const handleRemoveTestcase = (index) => {
+        const updatedTestcases = testcases.filter((_, i) => i !== index);
+        onTestcaseUpdate(problemIndex, updatedTestcases);
     };
 
     return (
-        <div className="testcase-container p-4 bg-white rounded-lg shadow-md">
-            <form className="space-y-4" onSubmit={handleAddTestcase}>
-                <div className="flex flex-col">
-                    <label htmlFor="input_case" className="font-medium text-gray-700">Input Case:</label>
-                    <textarea
-                        id="input_case"
-                        value={inputCase}
-                        onChange={(e) => setInputCase(e.target.value)}
-                        className="bg-gray-100 border border-gray-300 rounded-md p-2 resize-none"
-                        placeholder="Input case"
-                        rows={4}
-                        required
-                    />
-                </div>
-                <div className="flex flex-col">
-                    <label htmlFor="output_case" className="font-medium text-gray-700">Output Case:</label>
-                    <textarea
-                        id="output_case"
-                        value={outputCase}
-                        onChange={(e) => setOutputCase(e.target.value)}
-                        className="bg-gray-100 border border-gray-300 rounded-md p-2 resize-none"
-                        placeholder="Output case"
-                        rows={4}
-                        required
-                    />
-                </div>
-                <div className="flex flex-col">
-                    <label htmlFor="visibility" className="font-medium text-gray-700">Visibility:</label>
-                    <select
-                        id="visibility"
-                        value={visibility}
-                        onChange={(e) => setVisibility(e.target.value)}
-                        className="bg-gray-100 border border-gray-300 rounded-md p-2"
-                        required
+        <div className="mt-4 p-4 bg-white border border-gray-300 rounded-lg shadow-md">
+            <h3 className="text-lg font-medium text-gray-800 mb-2">Test Cases:</h3>
+            {testcases.map((testcase, index) => (
+                <div key={index} className="mb-2 p-2 border border-gray-200 rounded-md bg-gray-100">
+                    <p className="text-sm"><strong>Input:</strong> {testcase.input_case}</p>
+                    <p className="text-sm"><strong>Output:</strong> {testcase.output_case}</p>
+                    <p className="text-sm"><strong>Public:</strong> {testcase.is_public ? 'Yes' : 'No'}</p>
+                    <button
+                        onClick={() => handleRemoveTestcase(index)}
+                        className="mt-1 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-300"
                     >
-                        <option value="true">Public</option>
-                        <option value="false">Private</option>
-                    </select>
+                        Remove
+                    </button>
                 </div>
+            ))}
+
+            <div className="flex flex-col mt-4">
+                <input
+                    type="text"
+                    name="input_case"
+                    placeholder="Input Case"
+                    value={currentTestcase.input_case}
+                    onChange={handleChange}
+                    className="mb-2 bg-gray-100 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                    type="text"
+                    name="output_case"
+                    placeholder="Output Case"
+                    value={currentTestcase.output_case}
+                    onChange={handleChange}
+                    className="mb-2 bg-gray-100 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <label className="flex items-center text-sm font-medium text-gray-700">
+                    <input
+                        type="checkbox"
+                        name="is_public"
+                        checked={currentTestcase.is_public}
+                        onChange={handleChange}
+                        className="mr-2"
+                    />
+                    Public
+                </label>
                 <button
-                    type="submit"
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                    type="button"
+                    onClick={handleAddTestcase}
+                    className="mt-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors duration-300"
                 >
                     Add Test Case
                 </button>
-            </form>
-
-            {testcases.length > 0 && (
-                <div className="mt-6">
-                    {testcases.map((testcase, index) => (
-                        <div key={index} className="border-b-2 border-gray-200 pb-4 mb-4">
-                            <div className="flex flex-col mb-4">
-                                <strong className="text-gray-800">Input:</strong>
-                                <textarea
-                                    className="bg-yellow-50 w-full border border-gray-300 p-2 rounded-md resize-none"
-                                    value={testcase.input_case}
-                                    disabled
-                                    rows={testcase.input_case.split("\n").length}
-                                />
-                            </div>
-                            <div className="flex flex-col">
-                                <strong className="text-gray-800">Output:</strong>
-                                <textarea
-                                    className="bg-yellow-50 w-full border border-gray-300 p-2 rounded-md resize-none"
-                                    value={testcase.output_case}
-                                    disabled
-                                    rows={testcase.output_case.split("\n").length}
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
+            </div>
         </div>
     );
 };
 
 Testcase.propTypes = {
     onTestcaseUpdate: PropTypes.func.isRequired,
-    testcases: PropTypes.arrayOf(PropTypes.shape({
-        input_case: PropTypes.string.isRequired,
-        output_case: PropTypes.string.isRequired,
-        is_public: PropTypes.bool.isRequired,
-    })).isRequired,
+    testcases: PropTypes.arrayOf(
+        PropTypes.shape({
+            input_case: PropTypes.string.isRequired,
+            output_case: PropTypes.string.isRequired,
+            is_public: PropTypes.bool.isRequired,
+        })
+    ).isRequired,
     problemIndex: PropTypes.number.isRequired,
 };
 
