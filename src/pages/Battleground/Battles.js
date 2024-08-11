@@ -18,12 +18,7 @@ const Battleground = () => {
         setPopupAction('');
     };
 
-    const [contests, setContests] = useState([
-        { id: 1, name: 'Contest A', status: 'ongoing', endTime: '2024-08-10T14:30:00Z', linkLabel: 'Join' },
-        { id: 4, name: 'Contest D', status: 'ongoing', endTime: '2024-08-10T14:30:00Z', linkLabel: 'Join' },
-        { id: 2, name: 'Contest B', status: 'upcoming', startTime: '2024-08-12T10:00:00Z', linkLabel: 'Register' },
-        { id: 3, name: 'Contest C', status: 'completed', endTime: '2024-08-08T18:00:00Z', linkLabel: 'See Result' },
-    ]);
+    const [contests, setContests] = useState([]);
 
     const joinContest = (id) => {
         alert(`Join Contest ${id} functionality goes here`);
@@ -56,7 +51,7 @@ const Battleground = () => {
 
             <div className='battleground-bar'>
                 <div className="search-bar">
-                    <input type="text" placeholder="Search Contests... (To be implemented)" />
+                    <input type="text" placeholder="Search Contests..." />
                 </div>
                 <div>
                     <div className="contest-actions">

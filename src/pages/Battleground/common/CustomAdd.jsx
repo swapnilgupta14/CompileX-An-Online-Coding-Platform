@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const CustomAdd = ({ onSubmit, onRemove, index }) => {
     const [questionData, setQuestionData] = useState({
@@ -99,6 +100,12 @@ const CustomAdd = ({ onSubmit, onRemove, index }) => {
             </form>
         </div>
     );
+};
+
+CustomAdd.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
 };
 
 export default CustomAdd;

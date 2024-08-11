@@ -14,7 +14,7 @@ const getQuestion = async (data:{room_id:string}) => {
 }
 
 const getTestcase = async (data:{p_id:string}) => {
-    return AxiosInstance.get(`/arena/get_testcase/?pid=${data.p_id}`).then((res)=>res.data) as Promise<ApiResponseFormatted<testcaseType[]>>;
+    return AxiosInstance.get(`/arena/get_testcase_battle/?pid=${data.p_id}`).then((res)=>res.data) as Promise<ApiResponseFormatted<testcaseType[]>>;
 }
 
 
