@@ -33,6 +33,7 @@ export interface ArenaCodeRes {
 
 export interface BattleCodeRes {
     error: boolean;
+    event : string
     responseData: {
         error: boolean,
         data: {
