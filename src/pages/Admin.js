@@ -19,10 +19,10 @@ const Home = () => {
   return (
     <>
       <div className="home-container">
-        <header className="text-center mb-6">
+        <div className="text-center mb-6">
           <h1 className="text-4xl font-bold">Problems</h1>
           <p className="text-lg text-gray-600">Solve challenges, enhance your skills</p>
-        </header>
+        </div>
 
         <div className={`p-4 flex flex-col gap-4`}>
           <div className={`flex justify-between items-center`}>
