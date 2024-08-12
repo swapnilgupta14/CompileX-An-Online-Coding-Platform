@@ -1,14 +1,11 @@
-import Sidebar from './Sidebar';
+import Layout from '../pages/Layout';
 import '../styles/global.scss';
 
 function MyApp({ Component, pageProps }) {
   return (
-      <div className="app-container">
-          <Sidebar index={1}/>
-          <div className="main-content">
-              <Component {...pageProps} />
-          </div>
-      </div>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   );
 }
 

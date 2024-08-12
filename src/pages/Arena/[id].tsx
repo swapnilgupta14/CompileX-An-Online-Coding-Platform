@@ -175,7 +175,7 @@ const Arena = () => {
       </header>
 
       <div className="content">
-        <div className="problem-column h-[85vh] overflow-y-auto">
+        <div className="problem-column overflow-y-auto">
           {questionData && <ProblemDisplay problem={questionData} />}
 
           <h3>Public Test Cases</h3>
