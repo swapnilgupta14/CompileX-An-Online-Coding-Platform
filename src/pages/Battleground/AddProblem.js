@@ -77,7 +77,7 @@ const AddProblem = () => {
 
     return (
         <div className="add-contest-container p-4 bg-gray-50 min-h-screen">
-            <header className="header">
+            <div className="header">
                 <div className='title'>
                     <FaArrowLeft size={15} onClick={() => router.push("/Battleground/Battles")} />
                     <h1>Add Problem And Test Cases for Battle ID: {id}</h1>
@@ -86,7 +86,7 @@ const AddProblem = () => {
                     <button onClick={handleAddQuestion}>Add Another Question</button>
                     <button onClick={handleSubmitAllQuestions}>Submit Questions</button>
                 </div>
-            </header>
+            </div>
 
             {/* <div className="bg-transparent-100 p-4 rounded-lg min-h-fit"> */}
                 <div className="flex gap-4">

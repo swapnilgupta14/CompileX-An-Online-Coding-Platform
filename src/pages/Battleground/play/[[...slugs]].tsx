@@ -253,10 +253,10 @@ const Arena = () => {
     return (
         <div className={``}>
             <div className="arena-container">
-                <header className="header">
+                <div className="header">
                     <FaArrowLeft size={15} onClick={() => router.push("/Home")}/>
                     <h1>BattleGround</h1>
-                </header>
+                </div>
                 <div className={`flex`}>
                     <div className={`ml-5 flex flex-col mt-10 gap-2`}>
                         {
