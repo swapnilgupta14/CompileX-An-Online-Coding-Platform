@@ -7,13 +7,13 @@ const Layout = ({ children }) => {
   const router = useRouter();
 
   const titleMap = {
-    '/': 'Home - Compilex',
-    '/about': 'About - Compilex',
-    '/contact': 'Contact - Compilex',
+    '/Home': 'Home - Compilex',
+    '/Editor': 'Playground  - Compilex',
+    '/Battleground/Battles': 'Battleground  - Compilex',
+    '/Arena/[id]': 'Arena - Compilex',
   };
 
   const title = titleMap[router.pathname] || 'Compilex';
-  console.log(router.pathname);
 
   return (
     <>
