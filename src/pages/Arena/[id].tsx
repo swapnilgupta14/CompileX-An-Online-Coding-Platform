@@ -169,10 +169,10 @@ const Arena = () => {
 
   return (
     <div className="arena-container">
-      <header className="header">
+      <div className="header">
         <FaArrowLeft size={15} onClick={() => router.push("/Home")} />
         <h1>Arena</h1>
-      </header>
+      </div>
 
       <div className="content">
         <div className="problem-column overflow-y-auto">

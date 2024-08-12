@@ -44,10 +44,10 @@ const Battleground = () => {
 
     return (
         <div className="battleground-container">
-            <header className="header">
+            <div className="header">
                 <FaArrowLeft size={15} onClick={() => router.push("/Home")} />
                 <h1>Battleground</h1>
-            </header>
+            </div>
 
             <div className='battleground-bar'>
                 <div className="search-bar">
