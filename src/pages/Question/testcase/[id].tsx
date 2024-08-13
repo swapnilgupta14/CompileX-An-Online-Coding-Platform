@@ -35,7 +35,7 @@ const TestcaseId = () => {
         await ProblemAPI.testcaseAdd({
             output_case : output_case.toString(),
             input_case : input_case.toString(),
-            is_public : Boolean(visibility),
+            is_public : visibility === "true",
             p_id : router.query.id as string,
         })
 

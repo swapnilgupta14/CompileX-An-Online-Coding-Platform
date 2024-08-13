@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'; 
+import { useRouter } from 'next/router';
 import { FaCode, FaTerminal, FaTasks, FaCommentDots, FaUser, FaCamera, FaCog, FaGamepad } from 'react-icons/fa';
+import { FaC } from "react-icons/fa6";
+import Logo from "/public/assets/Logo(1).png";
+import Image from 'next/image';
 
 const Sidebar = () => {
-    const [activeIndex, setActiveIndex] = useState(1);
+    const [activeIndex, setActiveIndex] = useState(0);
     const router = useRouter();
 
     const menuItems = [
         { icon: <FaTasks size={20} />, label: 'Dashboard', path: '/' },
-        { icon: <FaCode size={20} />, label: 'Code Editor', path: '/Editor' },
-        { icon: <FaGamepad size={20} />, label: 'Battleground', path: '/#' },
-        { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '/#' },
+        { icon: <FaCode size={20} />, label: 'PlayGround', path: '/Editor' },
+        { icon: <FaGamepad size={20} />, label: 'Battleground', path: '/Battleground/Battles' },
+        // { icon: <FaCommentDots size={20} />, label: 'Discussion', path: '/#' },
     ];
 
     const userItems = [
@@ -25,9 +28,10 @@ const Sidebar = () => {
 
     return (
         <div className="sidebar">
-            <div className="sidebar-icon logo">
-                <FaCamera size={30} />
+            <div className="sidebar-icon logo cursor-move">
+                <Image src={Logo} alt="logo" className="w-11 h-10" draggable="false" />
             </div>
+
             <div className="sidebar-menu">
                 {menuItems.map((item, index) => (
                     <div
@@ -45,10 +49,10 @@ const Sidebar = () => {
                 {userItems.map((item, index) => (
                     <div
                         key={index}
-                        className={`sidebar-icon`}
-                        title={item.label}
+                    // className={`sidebar-icon`}
+                    // title={item.label}
                     >
-                        {item.icon}
+                        {/*{item.icon}*/}
                     </div>
                 ))}
             </div>

@@ -19,7 +19,7 @@ const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
 });
 
-const ProblemDisplay = ({ problem }) => (
+export const ProblemDisplay = ({ problem }) => (
   <div className="problem">
     <div className="problem-header">
       <h2>{problem.p_title}</h2>
@@ -169,13 +169,13 @@ const Arena = () => {
 
   return (
     <div className="arena-container">
-      <header className="header">
+      <div className="header">
         <FaArrowLeft size={15} onClick={() => router.push("/Home")} />
         <h1>Arena</h1>
-      </header>
+      </div>
 
       <div className="content">
-        <div className="problem-column h-[85vh] overflow-y-auto">
+        <div className="problem-column overflow-y-auto">
           {questionData && <ProblemDisplay problem={questionData} />}
 
           <h3>Public Test Cases</h3>

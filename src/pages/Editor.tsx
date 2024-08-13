@@ -74,10 +74,6 @@ const CodeEditor = () => {
 
   // const handleCodeChange = (value) => setCode(value);
 
-  // useEffect( () => {
-  //     console.log(JSON.stringify(code));
-  // }, [code]);
-
   const handleSubmit = () =>{
     console.log(code,codeInput);
     setCodeOutput("Loading")
