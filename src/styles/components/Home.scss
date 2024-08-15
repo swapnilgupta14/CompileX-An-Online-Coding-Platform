@@ -49,16 +49,30 @@
     width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-height: 85vh;
+    max-height: 85vh;
+    overflow-y: scroll;
+    overflow-x: none;
+
+    -ms-overflow-style: none;
+    scrollbar-width: 1px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .problem-bar {
       border-radius: $border-radius;
       padding: 1rem 1.5rem;
-      margin-bottom: 1rem;
+      // margin-bottom: 1rem;
       display: flex;
       justify-content: space-between;
       font-size: 15px;
       color: $accent-color;
       font-weight: 700;
+
+      // &::after{
+      //   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      // }
 
       .attribute {
         text-align: center;

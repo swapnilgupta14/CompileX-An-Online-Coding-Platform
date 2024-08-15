@@ -2,6 +2,7 @@ import '../styles/global.scss';
 import Sidebar from './Sidebar';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -14,6 +15,18 @@ function MyApp({ Component, pageProps }) {
   };
 
   const title = titleMap[router.pathname] || 'Compilex';
+
+  // tempoarry fix for https issue
+  useEffect(() => {
+    if (location.protocol === 'https:') {
+      // console.log(window.location.href);
+      // console.log(location.protocol);
+      // console.log(location.href);
+      // console.log(location.protocol.length);
+      // console.log(location.href.substring(location.protocol.length));
+      location.replace(`http:${location.href.substring(location.protocol.length)}`);
+    }
+  }, []);
 
   return (
     <>
