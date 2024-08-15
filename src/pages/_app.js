@@ -16,15 +16,10 @@ function MyApp({ Component, pageProps }) {
 
   const title = titleMap[router.pathname] || 'Compilex';
 
-  // tempoarry fix for https issue
+  // Temporary fix to redirect from HTTPS to HTTP
   useEffect(() => {
-    if (location.protocol === 'https:') {
-      // console.log(window.location.href);
-      // console.log(location.protocol);
-      // console.log(location.href);
-      // console.log(location.protocol.length);
-      // console.log(location.href.substring(location.protocol.length));
-      location.replace(`http:${location.href.substring(location.protocol.length)}`);
+    if (window.location.protocol === 'https:') {
+      window.location.replace(`http:${window.location.href.substring(window.location.protocol.length)}`);
     }
   }, []);
 
