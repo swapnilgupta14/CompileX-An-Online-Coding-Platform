@@ -42,12 +42,12 @@
 
 .problem-home-container {
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   width: 75%;
   margin: 1rem 1rem 1rem 0rem;
-  height: 100%;
+  height: fit-content;
 
   .problem-list {
     padding: 1rem;
@@ -162,7 +162,6 @@
     display: flex;
     gap: 20px;
     justify-content: space-around;
-    margin: 9rem 0 0 0;
 
     .card {
       flex: 1;
@@ -217,7 +216,7 @@
   background-color: $background-color-hover;
   border-radius: $border-radius;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 2.5rem 0rem 1rem 1rem;
+  margin: 1rem 0rem 1rem 1rem;
 
   .user-stats {
     display: flex;
