@@ -7,6 +7,14 @@
   width: calc(100% - 4rem);
   border-radius: 10px;
   border: 1px solid $background-color-hover;
+  overflow-y: auto;
+  overflow-x: none;
+  -ms-overflow-style: none;
+  scrollbar-width: 1px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .header {
     display: flex;
@@ -26,7 +34,7 @@
   .home-content {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100%;
     gap: 1rem;
   }
@@ -36,23 +44,22 @@
   justify-content: center;
   align-items: center;
   display: flex;
+  flex-direction: column;
   width: 75%;
   margin: 1rem 1rem 1rem 0rem;
   height: 100%;
 
   .problem-list {
-    background: $background-color-hover;
     padding: 1rem;
     border-radius: 8px;
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 1rem;
+    background: $background-color-hover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 85vh;
-    max-height: 85vh;
-    overflow-y: scroll;
-    overflow-x: none;
-
+    min-height: fit-content;
+    max-height: fit-content;
     -ms-overflow-style: none;
     scrollbar-width: 1px;
 
@@ -69,10 +76,6 @@
       font-size: 15px;
       color: $accent-color;
       font-weight: 700;
-
-      // &::after{
-      //   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      // }
 
       .attribute {
         text-align: center;
@@ -154,6 +157,54 @@
       font-size: 16px;
     }
   }
+
+  .home-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+    margin: 9rem 0 0 0;
+
+    .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-content {
+        h3 {
+          font-size: 1.5rem;
+          margin-bottom: 10px;
+          color: black;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        p {
+          font-size: 1rem;
+          margin-bottom: 20px;
+          color: $primary-color;
+        }
+      }
+
+      .card-icon {
+        font-size: 2rem;
+        color: $primary-color;
+        align-self: flex-end;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+  }
 }
 
 .home-section-wrapper {
@@ -166,7 +217,7 @@
   background-color: $background-color-hover;
   border-radius: $border-radius;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 1rem 0rem 1rem 1rem;
+  margin: 2.5rem 0rem 1rem 1rem;
 
   .user-stats {
     display: flex;

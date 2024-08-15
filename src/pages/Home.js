@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import ProblemAPI from '../utils/ProblemAPI';
 import { QUESTION_DIFFICULTY } from '../utils/Static';
+import path from 'path';
+import { FaCode, FaTasks, FaUser, FaCog, FaGamepad } from 'react-icons/fa';
 
 const Home = () => {
   const [questionArr, setQuestionArr] = useState([]);
@@ -33,8 +35,48 @@ const Home = () => {
 const ProblemList = ({ questionArr, isLoading }) => {
   const columnAttributes = ["Problem Title", "Difficulty", "Actions"];
 
+  const HomeCards = [
+    {
+      title: "Arena",
+      path: '/Arena/p_b8128f2286de1f731211bccbd0463786',
+      Icon: <FaCode />,
+      Description: 'Solve DSA problems and enhance your skills',
+      bg: '#FFD199',
+    },
+    {
+      title: "Battleground",
+      path: '/Battleground/Battles',
+      Icon: <FaGamepad />,
+      Description: 'Battle with others and improve your ranking & skills',
+      bg: '#D6EBAD', 
+    },
+    {
+      title: "Playground",
+      path: '/Editor',
+      Icon: <FaCog />,
+      Description: 'Practice coding with various languages with the code editor',
+      bg: '#F19499', 
+    }
+  ];
+
   return (
     <div className='problem-home-container'>
+      <div className='home-cards'>
+        {HomeCards.map((card, index) => (
+          <Link key={index} href={card.path}>
+            <div className='card' style={{ background: card.bg }}>
+              <div className='card-content'>
+                <h3>{card.title}</h3>
+                <p>{card.Description}</p>
+              </div>
+              <div className='card-icon'>
+                {card.Icon}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
       <div className="problem-list">
         <div className='problem-bar'>
           {columnAttributes.map((it, index) => (
@@ -44,9 +86,10 @@ const ProblemList = ({ questionArr, isLoading }) => {
           ))}
         </div>
         {questionArr.length !== 0 ? (
-          questionArr.map((question) => (
+          questionArr.map((question, index) => (
             <div className="problem-header">
               <div className="problem-info">
+                <span>{index+1 + ". "}</span> <span>{" "}</span> 
                 <span className="problem-title">{question.p_title}</span>
               </div>
               <div className="problem-actions">
