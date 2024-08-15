@@ -18,7 +18,9 @@ function MyApp({ Component, pageProps }) {
 
   // Temporary fix to redirect from HTTPS to HTTP
   useEffect(() => {
-    if (window.location.protocol === 'https:') {
+    const shouldRedirect = sessionStorage.getItem('redirected') !== 'true';
+    if (shouldRedirect && window.location.protocol === 'https:') {
+      sessionStorage.setItem('redirected', 'true');
       window.location.replace(`http:${window.location.href.substring(window.location.protocol.length)}`);
     }
   }, []);
