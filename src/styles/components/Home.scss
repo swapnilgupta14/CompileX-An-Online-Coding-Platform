@@ -19,10 +19,11 @@
   .header {
     display: flex;
     align-items: center;
-    padding: 9px 20px;
+    padding: 9px 15px;
     background-color: #fafafa;
     border-bottom: 1px solid darken($background-color, 10%);
-    color: $primary-color;
+    color: $accent-color;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     h1 {
       font-size: 1.5rem;
