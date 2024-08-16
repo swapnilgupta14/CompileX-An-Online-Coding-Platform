@@ -33,7 +33,7 @@ const Home = () => {
 };
 
 const ProblemList = ({ questionArr, isLoading }) => {
-  const columnAttributes = ["Problem Title", "Difficulty", "Actions"];
+  const columnAttributes = ["Problem Title", "Actions"];
 
   const HomeCards = [
     {
