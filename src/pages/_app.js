@@ -3,6 +3,8 @@ import Sidebar from './Sidebar';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useEffect } from 'react';
+import store from '../redux/store';
+import { Provider } from 'react-redux';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -16,26 +18,19 @@ function MyApp({ Component, pageProps }) {
 
   const title = titleMap[router.pathname] || 'Compilex';
 
-  // Temporary fix to redirect from HTTPS to HTTP
-  useEffect(() => {
-    const shouldRedirect = sessionStorage.getItem('redirected') !== 'true';
-    if (shouldRedirect && window.location.protocol === 'https:') {
-      sessionStorage.setItem('redirected', 'true');
-      window.location.replace(`http:${window.location.href.substring(window.location.protocol.length)}`);
-    }
-  }, []);
-
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="app-container"></div>
-      <Sidebar index={1} />
-      <div className="main-content">
-        <Component {...pageProps} />
-      </div>
+      <Provider store={store}>
+        <Head>
+          <title>{title}</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <div className="app-container"></div>
+        <Sidebar index={1} />
+        <div className="main-content">
+          <Component {...pageProps} />
+        </div>
+      </Provider >
     </>
   );
 }
