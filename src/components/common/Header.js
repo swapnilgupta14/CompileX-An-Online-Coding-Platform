@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import Image from 'next/image';
+import {useRouter} from 'next/router';
 
 const Header = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const router = useRouter();
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
         console.log(isDropdownOpen);
     };
+
+    const handleRouteToProfile = () => {
+        router.push('../../pages/Profile/profile.js')
+    }
 
     return (
         <nav className='navbar'>
@@ -25,7 +31,7 @@ const Header = () => {
                         width={40}
                         height={40}
                         className='profile-pic'
-                    />
+                        />
                 </div>
                 {isDropdownOpen && (
                     <div className={`dropdown-menu ${isDropdownOpen ? 'open' : ''}`}>
@@ -36,6 +42,7 @@ const Header = () => {
                                 width={60}
                                 height={60}
                                 className='dropdown-profile-pic'
+                                onClick={handleRouteToProfile}
                             />
                             <div className='user-details'>
                                 <span className='user-name'>Swapnil Gupta</span>
