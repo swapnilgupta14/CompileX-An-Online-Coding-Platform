@@ -22,12 +22,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="header">
-<<<<<<< HEAD
-        <h1 className="header-title">Compilex - </h1>
-        <p className="header-subtitle">Solve challenges, enhance your skills</p>
-=======
         <Header />
->>>>>>> 58e4416745b60fbcf4a313c6767a7005fad1a3ef
       </div>
       <div className='home-content'>
         <HomeSection title="Problems" />
@@ -39,8 +34,7 @@ const Home = () => {
 
 const ProblemList = ({ questionArr, isLoading }) => {
   const columnAttributes = ["Problem Title", "Actions"];
-<<<<<<< HEAD
-=======
+
 
   const HomeCards = [
     {
@@ -65,7 +59,6 @@ const ProblemList = ({ questionArr, isLoading }) => {
       bg: '#F19499',
     }
   ];
->>>>>>> 58e4416745b60fbcf4a313c6767a7005fad1a3ef
 
   return (
     <div className='problem-home-container'>
