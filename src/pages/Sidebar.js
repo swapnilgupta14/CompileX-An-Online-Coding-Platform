@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { FaCode, FaTerminal, FaTasks, FaCommentDots, FaUser, FaCamera, FaCog, FaGamepad } from 'react-icons/fa';
+import { FaCode, FaTasks, FaUser, FaCog, FaGamepad } from 'react-icons/fa';
 import { FaC } from "react-icons/fa6";
 import Logo from "/public/assets/Logo(1).png";
 import Image from 'next/image';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeTab } from '../redux/Reducers/sidebarReducer';
 
 const Sidebar = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
     const router = useRouter();
+    const dispatch = useDispatch();
+    const currTab = useSelector((state) => state.changeTab.tab.payload);
+    console.log(currTab);
 
     const menuItems = [
         { icon: <FaTasks size={20} />, label: 'Dashboard', path: '/' },
@@ -22,7 +26,7 @@ const Sidebar = () => {
     ];
 
     const handleNavigation = (index, path) => {
-        setActiveIndex(index);
+        dispatch(changeTab({ type: 'CHANGETAB', payload: index }));
         router.push(path);
     };
 
@@ -36,12 +40,12 @@ const Sidebar = () => {
                 {menuItems.map((item, index) => (
                     <div
                         key={index}
-                        className={`sidebar-icon ${activeIndex === index ? 'active' : ''}`}
+                        className={`sidebar-icon ${currTab === index ? 'active' : ''}`}
                         onClick={() => handleNavigation(index, item.path)}
                         title={item.label}
                     >
                         {item.icon}
-                        {activeIndex === index && <div className="active-indicator" />}
+                        {currTab === index && <div className="active-indicator" />}
                     </div>
                 ))}
             </div>

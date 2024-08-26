@@ -1,0 +1,209 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  width: 100%;
+  font-weight: 600;
+  margin: 0;
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+
+    li {
+      margin-left: 1.5rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        font-size: 1rem;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+
+    .profile {
+      margin-left: 1.5rem;
+
+      .profile-pic {
+        border-radius: 50%;
+        border: 2px solid $accent-color;
+      }
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        width: 300px;
+        background-color: $background-color;
+        border: 1px solid $header-background-color;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 1rem;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      
+        &.open {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      
+        .user-info {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+      
+          .dropdown-profile-pic {
+            border-radius: 50%;
+            border: 2px solid $accent-color;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+      
+            &:hover {
+              transform: scale(1.05);
+            }
+          }
+      
+          .user-details {
+            .user-name {
+              font-weight: bold;
+              font-size: 1.1rem;
+            }
+      
+            .subscription-info {
+              font-size: 0.9rem;
+              color: $header-background-color;
+            }
+          }
+        }
+      
+        .dropdown-links {
+          .dropdown-item {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+      
+            a,
+            button {
+              color: $primary-color;
+              text-decoration: none;
+              font-size: 1rem;
+              background: none;
+              border: none;
+              cursor: pointer;
+              transition: color 0.3s ease, background-color 0.3s ease;
+              padding: 0.5rem 1rem;
+              border-radius: $border-radius;
+      
+              &:hover {
+                color: $accent-color;
+                background-color: $background-color-hover;
+              }
+            }
+          }
+        }
+      }
+      
+
+    .auth-links {
+      display: flex;
+      align-items: center;
+      margin-left: 1.5rem;
+
+      .auth-buttons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        button {
+          background-color: transparent;
+          border: 2px solid $primary-color;
+          padding: 0.5rem;
+          // font-size: 1rem;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $accent-color;
+            color: $background-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .nav-links {
+      flex-direction: column;
+      align-items: flex-start;
+
+      li {
+        margin: 0.5rem 0;
+      }
+    }
+
+    .nav-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 1rem;
+
+      .auth-links {
+        margin-left: 0;
+        .auth-buttons {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding: 1rem;
+
+    .nav-links {
+      li {
+        margin-left: 1rem;
+
+        a {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .nav-actions {
+      .profile,
+      .auth-links {
+        margin-left: 1rem;
+
+        button {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+

@@ -16,7 +16,15 @@ const CodeEditor = () => {
   const [language, setLanguage] = useState('cpp');
   const [fontSize, setFontSize] = useState(16);
   const [outputVisible, setOutputVisible] = useState(true);
-  const [code, setCode] = useState('// Start coding here!');
+  const [code, setCode] = useState(`// Start coding here!
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    // Write your code here
+    return 0;
+}`);
+
   const [codeInput, setCodeInput] = useState("")
   const [codeOutput, setCodeOutput] = useState<string>()
   const [outputState, setOutputState] = useState<string>()

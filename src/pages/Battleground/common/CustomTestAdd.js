@@ -30,7 +30,7 @@ const Testcase = ({ onTestcaseUpdate, testcases, problemIndex }) => {
     return (
         <div className="mt-4 p-4 bg-white border border-gray-300 rounded-lg shadow-md">
             <h3 className="text-lg font-medium text-gray-800 mb-2">Test Cases:</h3>
-            {testcases.map((testcase, index) => (
+            {testcases?.map((testcase, index) => (
                 <div key={index} className="mb-2 p-2 border border-gray-200 rounded-md bg-gray-100">
                     <p className="text-sm"><strong>Input:</strong> {testcase.input_case}</p>
                     <p className="text-sm"><strong>Output:</strong> {testcase.output_case}</p>
