@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ProblemAPI from '../utils/ProblemAPI';
 import { QUESTION_DIFFICULTY } from '../utils/Static';
 import path from 'path';
+import Header from '../components/common/Header';
 import { FaCode, FaTasks, FaUser, FaCog, FaGamepad } from 'react-icons/fa';
 
 const Home = () => {
@@ -21,8 +22,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="header">
-        <h1 className="header-title">Compilex</h1>
-        <p className="header-subtitle">Solve challenges, practice, battle and enhance your skills</p>
+        <Header />
       </div>
       <div className='home-content'>
         <HomeSection title="Problems" />
@@ -48,14 +48,14 @@ const ProblemList = ({ questionArr, isLoading }) => {
       path: '/Battleground/Battles',
       Icon: <FaGamepad />,
       Description: 'Battle with others and improve your ranking & skills',
-      bg: '#D6EBAD', 
+      bg: '#D6EBAD',
     },
     {
       title: "Playground",
       path: '/Editor',
       Icon: <FaCog />,
       Description: 'Practice coding with various languages with the code editor',
-      bg: '#F19499', 
+      bg: '#F19499',
     }
   ];
 
@@ -89,7 +89,7 @@ const ProblemList = ({ questionArr, isLoading }) => {
           questionArr.map((question, index) => (
             <div className="problem-header">
               <div className="problem-info">
-                <span>{index+1 + ". "}</span> <span>{" "}</span> 
+                <span>{index + 1 + ". "}</span> <span>{" "}</span>
                 <span className="problem-title">{question.p_title}</span>
               </div>
               <div className="problem-actions">
