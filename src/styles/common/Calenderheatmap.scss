@@ -1,0 +1,34 @@
+.submission-calendar {
+    background-color: $background-color;
+    padding: 1rem;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+
+    h3{
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .react-calendar-heatmap .color-github-1 {
+        fill: #a1b6d6;
+    }
+    .react-calendar-heatmap .color-github-2 {
+        fill: #40659c;
+    }
+    .react-calendar-heatmap .color-github-3 {
+        fill: $accent-color;
+    }
+    .react-calendar-heatmap .color-github-4 {
+        fill: $accent-color;
+    }
+    .react-calendar-heatmap .color-github-5 {
+        fill: $accent-color;
+    }
+    .react-calendar-heatmap .color-github-6 {
+        fill: $accent-color;
+    }
+    .react-calendar-heatmap .color-empty {
+        fill: $background-color-hover;
+    }
+}

@@ -1,9 +1,21 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import SubmissionCalendar from "../../components/common/CalenderHeatmap";
 
 const Profile = () => {
   const router = useRouter();
+
+  const data = [
+    { date: '2024-07-01', count: 2 },
+    { date: '2024-07-02', count: 5 },
+    { date: '2024-07-03', count: 1 },
+    { date: '2024-07-04', count: 6 },
+    { date: '2024-07-08', count: 1 },
+    { date: '2024-07-09', count: 1 },
+    { date: '2024-03-02', count: 3 },
+    // Add more data here
+  ];
 
   // Dummy Data
   const userData = {
@@ -29,13 +41,6 @@ const Profile = () => {
         hard: 15,
       },
     },
-    badges: [
-      { name: "JavaScript Guru", level: 5 },
-      { name: "Problem Solver", level: 4 },
-      { name: "Speed Coder", level: 3 },
-      { name: "React Expert", level: 4 },
-      { name: "Algorithm Master", level: 5 },
-    ],
     recentSubmissions: [
       {
         id: 1,
@@ -147,53 +152,53 @@ const Profile = () => {
         <div className="profile-upper-container">
           <div className="profile-image">
             <img src={userData.image} alt={`${userData.name}'s Profile`} />
-          </div>
-          <div className="profile-details">
             <div className="personal-details">
               <h2>{userData.name}</h2>
               <p>{userData.currentRole} at {userData.college}</p>
-              <p>{userData.location}</p>
+              {/* <p>{userData.location}</p> */}
             </div>
+          </div>
+          <div className="profile-details">
             <div className="personal-stats">
-              <div className="submission-calendar">
-                <h3>Submission Calendar</h3>
-                <p>Total Submissions: {userData.submissionStats.totalSubmissions}</p>
-                <p>Success Rate: {(userData.submissionStats.successRate * 100).toFixed(2)}%</p>
-              </div>
-              <div className="numbers">
-                <h3>Problem Breakdown</h3>
-                <p>Easy: {userData.submissionStats.problemsSolvedByDifficulty.easy}</p>
-                <p>Medium: {userData.submissionStats.problemsSolvedByDifficulty.medium}</p>
-                <p>Hard: {userData.submissionStats.problemsSolvedByDifficulty.hard}</p>
-              </div>
-              <div className="badges">
-                <h3>Badges</h3>
-                <ul>
-                  {userData.badges.map((badge, index) => (
-                    <li key={index}>{badge.name} (Level {badge.level})</li>
-                  ))}
-                </ul>
-              </div>
+              <SubmissionCalendar data={data} />
+              {/* <div className="stats">
+                <div className="numbers">
+                  <h3>Problem Breakdown</h3>
+                  <p>Easy: {userData.submissionStats.problemsSolvedByDifficulty.easy}</p>
+                  <p>Medium: {userData.submissionStats.problemsSolvedByDifficulty.medium}</p>
+                  <p>Hard: {userData.submissionStats.problemsSolvedByDifficulty.hard}</p>
+                </div>
+                <div className="problem-related-stats">
+                  <h3>Problem-Related Stats</h3>
+                  <p>Total Problems Solved: {userData.submissionStats.totalProblemsSolved}</p>
+                  <p>Total Submissions: {userData.submissionStats.totalSubmissions}</p>
+                  <p>Success Rate: {(userData.submissionStats.successRate * 100).toFixed(2)}%</p>
+                </div>
+              </div> */}
             </div>
           </div>
         </div>
         <div className="profile-lower-container">
-          <div className="problem-related-stats">
-            <h3>Problem-Related Stats</h3>
-            <p>Total Problems Solved: {userData.submissionStats.totalProblemsSolved}</p>
-          </div>
           <div className="recent-problem-submissions">
             <h3>Recent Problem Submissions</h3>
-            <ul>
+            <div className="submission-list">
               {userData.recentSubmissions.map((submission) => (
-                <li key={submission.id}>
-                  {submission.title} - {submission.status} ({submission.time})
-                  <br />
-                  <small>Language: {submission.language} | Runtime: {submission.runtime}</small>
-                </li>
+                <div key={submission.id} className="submission-table">
+                  <h4 className="submission-title">{submission.title}</h4>
+                  <div className="submission-status-action">
+                    <span className={`status-tag ${submission.status.toLowerCase()}`}>
+                      {submission.status}
+                    </span>
+                    <small>{submission.language}</small>
+                    <small>{submission.runtime}</small>
+                    <small>{submission.time}</small>
+                    <button className="view-submission">View</button>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

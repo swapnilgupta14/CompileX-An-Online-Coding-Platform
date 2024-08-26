@@ -49,6 +49,7 @@ const Header = () => {
                                 />
                                 <div className='user-details'>
                                     <span className='user-name'>Swapnil Gupta</span>
+                                    <button className="close-button" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>×</button>
                                 </div>
                             </div>
                             <div className='dropdown-links'>
@@ -56,7 +57,7 @@ const Header = () => {
                                 <div className='dropdown-item'><a href='#'>Notebook</a></div>
                                 <div className='dropdown-item'><a href='#'>Submissions</a></div>
                                 <div className='dropdown-item'><a href='#'>Points</a></div>
-                                <div className='dropdown-item'><button className='signout-btn' onClick={() => setIsDropdownOpen(!isDropdownOpen)}>Sign Out</button></div>
+                                <div className='dropdown-item'><button className='signout-btn' onClick={() => alert('Soon to be available')}>Sign Out</button></div>
                             </div>
                         </div>
                     </div>
