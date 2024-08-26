@@ -1,0 +1,148 @@
+.profile-container {
+  min-height: 100vh;
+  position: absolute;
+  left: 3.5rem;
+  width: calc(100% - 4rem);
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #fafafa;
+    border-bottom: 1px solid darken($background-color, 10%);
+    color: $primary-color;
+
+    h1 {
+      font-size: 1.2rem;
+      margin: 0.2rem 0.8rem;
+    }
+
+    svg {
+      cursor: pointer;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $accent-color;
+      }
+    }
+  }
+
+  .profile-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .profile-upper-container {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+
+      .profile-image {
+        img {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #ddd;
+        }
+      }
+
+      .profile-details {
+        flex: 1;
+
+        .personal-details {
+          margin-bottom: 15px;
+
+          h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: #222;
+          }
+
+          p {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #555;
+          }
+        }
+
+        .personal-stats {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+
+          .submission-calendar,
+          .numbers,
+          .badges {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            h3 {
+              font-size: 1.2rem;
+              margin-bottom: 10px;
+              color: #333;
+            }
+
+            p {
+              font-size: 1rem;
+              color: #666;
+            }
+
+            ul {
+              list-style: none;
+              padding: 0;
+
+              li {
+                font-size: 0.9rem;
+                color: #444;
+                margin-bottom: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .profile-lower-container {
+      .problem-related-stats,
+      .recent-problem-submissions {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        h3 {
+          font-size: 1.2rem;
+          margin-bottom: 10px;
+          color: #333;
+        }
+
+        p,
+        ul {
+          font-size: 1rem;
+          color: #666;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+
+          li {
+            margin-bottom: 10px;
+
+            small {
+              display: block;
+              font-size: 0.8rem;
+              color: #999;
+            }
+          }
+        }
+      }
+    }
+  }
+}
