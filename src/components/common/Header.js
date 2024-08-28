@@ -1,6 +1,7 @@
 import React, { use, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Header = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,8 +21,8 @@ const Header = () => {
     return (
         <nav className='navbar'>
             <ul className='nav-links'>
-                <li><a href='#'>Home</a></li>
-                <li><a href='#'>Battles</a></li>
+                <li><a href='/'>Home</a></li>
+                <li><a href='/Battleground/Battles'>Battles</a></li>
                 <li><a href='#'>Leaderboard</a></li>
                 <li><a href='#'>Store</a></li>
             </ul>
@@ -54,7 +55,7 @@ const Header = () => {
                             </div>
                             <div className='dropdown-links'>
                                 <div className='dropdown-item'><a href='#'>My Lists</a></div>
-                                <div className='dropdown-item'><a href='#'>Notebook</a></div>
+                                <div className='dropdown-item'><Link href='https://chalkpad-web.vercel.app/'>Whiteboard</Link></div>
                                 <div className='dropdown-item'><a href='#'>Submissions</a></div>
                                 <div className='dropdown-item'><a href='#'>Points</a></div>
                                 <div className='dropdown-item'><button className='signout-btn' onClick={() => alert('Soon to be available')}>Sign Out</button></div>
