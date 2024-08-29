@@ -89,6 +89,7 @@
 
       p {
         margin: 0;
+        margin-left: -0.5rem;
         text-align: left;
 
         &:first-child {
@@ -97,18 +98,18 @@
         }
         &:last-child {
           font-size: 15px;
-          color: #333; /* Consistent color scheme */
+          color: #333; 
         }
       }
 
       &.easy {
-        background-color: #d6ebad; /* Soft green */
+        background-color: #d6ebad;
       }
       &.medium {
-        background-color: #ffd199; /* Soft orange */
+        background-color: #ffd199;
       }
       &.hard {
-        background-color: #f19499; /* Soft red */
+        background-color: #f19499;
       }
     }
   }

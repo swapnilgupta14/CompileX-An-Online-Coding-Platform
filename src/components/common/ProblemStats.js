@@ -60,7 +60,7 @@ const ProblemStats = () => {
                     <p>{easyProblems.solved}/{easyProblems.total}</p>
                 </div>
                 <div className="difficulty-item medium">
-                    <p>Med.</p>
+                    <p>Medium</p>
                     <p>{mediumProblems.solved}/{mediumProblems.total}</p>
                 </div>
                 <div className="difficulty-item hard">
