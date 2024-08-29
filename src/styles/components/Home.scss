@@ -241,10 +241,17 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 94%;
 
-    h4 {
-      font-size: 15px;
-      color: $accent-color;
-      font-weight: 700;
+    .user-stats-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      h4 {
+        font-size: 15px;
+        color: $accent-color;
+        font-weight: 700;
+      }
     }
   }
 
@@ -266,6 +273,24 @@
 
     .calendar {
       margin-bottom: 1rem;
+
+      .calender-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0.5rem 0;
+
+        h4 {
+          font-size: 15px;
+          color: $accent-color;
+          font-weight: 700;
+        }
+
+        .calender-nav {
+          cursor: pointer;
+        }
+      }
 
       .calendar-grid {
         display: grid;
@@ -294,6 +319,20 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+
+      .tasks-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0.5rem 0;
+
+        h4 {
+          font-size: 15px;
+          color: $accent-color;
+          font-weight: 700;
+        }
+      }
 
       .task-card {
         padding: 10px;

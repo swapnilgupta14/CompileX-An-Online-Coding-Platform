@@ -7,6 +7,7 @@ import path from 'path';
 import Header from '../components/common/Header';
 import { FaCode, FaTasks, FaUser, FaCog, FaGamepad } from 'react-icons/fa';
 import ProblemStats from '../components/common/ProblemStats';
+import { ArrowIcon, ExpandIcon, PlusIcon } from '../assets/icon';
 
 const Home = () => {
   const [questionArr, setQuestionArr] = useState([]);
@@ -146,19 +147,28 @@ const HomeSection = () => {
     <div className='home-section-wrapper'>
       <div className='user-stats'>
         <>
-          <h4>Total Problem Solved</h4>
+          <div className='user-stats-header'>
+            <h4>Total Problem Solved</h4>
+            <Link href={`/Profile/swapnilgupta14`}> <ArrowIcon width={22} height={22} color={'#0066ff'} /></Link>
+          </div>
           <ProblemStats />
         </>
       </div>
       <div className='home-section'>
         <div className='calendar'>
-          <h4>Calendar</h4>
+          <div className='calender-header'>
+            <h4>Calender</h4>
+            <Link href={`/Profile/swapnilgupta14`}> <ArrowIcon width={22} height={22} color={'#0066ff'} /></Link>
+          </div>
           <div className="calendar-grid">
             {renderCalendarDays()}
           </div>
         </div>
         <div className='lists'>
-          <h4>Tasks</h4>
+          <div className='tasks-header'>
+            <h4>Daily Tasks</h4>
+            <Link href={`/Profile/swapnilgupta14`}> <PlusIcon width={22} height={22} color={'#0066ff'} /></Link>
+          </div>
           {
             tasks.map((task, index) => (
               <div key={index} className="task-card">
