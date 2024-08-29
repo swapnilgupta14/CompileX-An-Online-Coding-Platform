@@ -113,3 +113,42 @@
     }
   }
 }
+
+
+.problem-stats-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  
+    .circular-progress {
+      svg {
+        transition: transform 0.4s ease-in-out;
+      }
+  
+      &:hover {
+        svg {
+          transform: rotate(-90deg) scale(1.05);
+        }
+      }
+    }
+  
+    .difficulty-stats {
+      .difficulty-item {
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  
+        &:hover {
+          transform: scale(1.05);
+          background-color: lighten(#d6ebad, 5%);
+        }
+  
+        &.easy:hover {
+          background-color: lighten(#d6ebad, 5%);
+        }
+        &.medium:hover {
+          background-color: lighten(#ffd199, 5%);
+        }
+        &.hard:hover {
+          background-color: lighten(#f19499, 5%);
+        }
+      }
+    }
+  }
+  

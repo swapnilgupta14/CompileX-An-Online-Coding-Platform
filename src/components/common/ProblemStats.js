@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ProblemStats = () => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+
     const totalProblems = 3269;
     const solvedProblems = 312;
     const attemptingProblems = 15;
@@ -17,9 +20,22 @@ const ProblemStats = () => {
     const mediumSolvedProportion = (mediumProblems.solved / mediumProblems.total) * mediumProportion;
     const hardSolvedProportion = (hardProblems.solved / hardProblems.total) * hardProportion;
 
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
+    const handleClick = () => {
+        setIsClicked(!isClicked);
+    };
+
     return (
-        <div className="problem-stats-card">
-            <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+        <div className={`problem-stats-card ${isHovered ? 'hovered' : ''} ${isClicked ? 'clicked' : ''}`}
+            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div className="circular-progress">
                     <svg>
                         <circle cx="80" cy="70" r="56" strokeDasharray="226.2" strokeDashoffset="0" />
@@ -35,7 +51,7 @@ const ProblemStats = () => {
                         <p>Solved</p>
                     </div>
                 </div>
-                <h3 style={{fontWeight: '600'}}>{15} Attempting</h3>
+                <h3 style={{ fontWeight: '600' }}>{attemptingProblems} Attempting</h3>
             </div>
 
             <div className="difficulty-stats">

@@ -116,6 +116,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: box-shadow 0.3s, background-color 0.3s;
+
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: $background-color;
+      }
 
       .problem-info {
         display: flex;
