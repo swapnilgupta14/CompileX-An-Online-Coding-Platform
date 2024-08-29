@@ -6,6 +6,7 @@ import { QUESTION_DIFFICULTY } from '../utils/Static';
 import path from 'path';
 import Header from '../components/common/Header';
 import { FaCode, FaTasks, FaUser, FaCog, FaGamepad } from 'react-icons/fa';
+import ProblemStats from '../components/common/ProblemStats';
 
 const Home = () => {
   const [questionArr, setQuestionArr] = useState([]);
@@ -117,6 +118,7 @@ const ProblemList = ({ questionArr, isLoading }) => {
 };
 
 const HomeSection = () => {
+
   const renderCalendarDays = () => {
     let days = [];
     for (let i = 1; i <= 30; i++) {
@@ -125,21 +127,28 @@ const HomeSection = () => {
     return days;
   };
 
+  const tasks = [
+    {
+      title: 'Finish React Component',
+      description: 'Finish the component for the dashboard',
+    },
+    {
+      title: 'Update Documentation',
+      description: 'Update the documentation for the project',
+    },
+    {
+      title: 'Meet with Design Team',
+      description: 'Meet with the design team to discuss the new project',
+    },
+  ];
+
   return (
     <div className='home-section-wrapper'>
       <div className='user-stats'>
-        <div className="stat-card">
-          <h4>Total Logins</h4>
-          <p>150</p>
-        </div>
-        <div className="stat-card">
-          <h4>Projects Completed</h4>
-          <p>12</p>
-        </div>
-        <div className="stat-card">
-          <h4>Active Sessions</h4>
-          <p>3</p>
-        </div>
+        <>
+          <h4>Total Problem Solved</h4>
+          <ProblemStats />
+        </>
       </div>
       <div className='home-section'>
         <div className='calendar'>
@@ -150,15 +159,14 @@ const HomeSection = () => {
         </div>
         <div className='lists'>
           <h4>Tasks</h4>
-          <div className="task-card">
-            <p>Finish React Component</p>
-          </div>
-          <div className="task-card">
-            <p>Update Documentation</p>
-          </div>
-          <div className="task-card">
-            <p>Meet with Design Team</p>
-          </div>
+          {
+            tasks.map((task, index) => (
+              <div key={index} className="task-card">
+                {/* <h4>{task.title}</h4> */}
+                <p>{task.title}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>

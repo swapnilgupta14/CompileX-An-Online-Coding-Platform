@@ -17,13 +17,17 @@
   }
 
   .header {
+    width: inherit;
+    position: fixed;
     display: flex;
     align-items: center;
     padding: 9px 15px;
     background-color: #fafafa;
     border-bottom: 1px solid darken($background-color, 10%);
     color: $accent-color;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
 
     h1 {
       font-size: 1.5rem;
@@ -34,6 +38,7 @@
 
   .home-content {
     display: flex;
+    margin-top: 5rem;
     justify-content: center;
     align-items: flex-start;
     height: 100%;
@@ -186,7 +191,7 @@
           color: black;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         p {
           font-size: 1rem;
           margin-bottom: 20px;
@@ -221,20 +226,26 @@
 
   .user-stats {
     display: flex;
+    flex-direction: column;
     gap: 10px;
+    margin-top: 1rem;
     padding: 1rem;
+    background: $background-color;
+    border-radius: $border-radius;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 94%;
 
-    .stat-card {
-      padding: 1rem;
-      background: #f4f4f4;
-      border-radius: $border-radius;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    h4 {
+      font-size: 15px;
+      color: $accent-color;
+      font-weight: 700;
     }
   }
 
   .home-section {
     flex: 1;
-    margin: 0rem 0.5rem 1rem 0.5rem;
+    width: 94%;
+    margin: 1rem 0rem 1rem 0rem;
     padding: 1rem;
     border-radius: $border-radius;
     background-color: #f9f9f9;
