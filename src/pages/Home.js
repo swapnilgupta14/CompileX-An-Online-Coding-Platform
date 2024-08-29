@@ -8,6 +8,7 @@ import Header from "../components/common/Header";
 import { FaCode, FaTasks, FaUser, FaCog, FaGamepad } from "react-icons/fa";
 import ProblemStats from "../components/common/ProblemStats";
 import { ArrowIcon, ExpandIcon, PlusIcon, TrashIcon } from "../assets/icon";
+import Calender from "../components/Calender";
 
 const Home = () => {
   const [questionArr, setQuestionArr] = useState([]);
@@ -120,9 +121,8 @@ const ProblemList = ({ questionArr, isLoading }) => {
 };
 
 const HomeSection = () => {
-  const [isPlusClicked, setIsPlusClicked] = useState(false);
   const [isAddingTask, setIsAddingTask] = useState(false);
-  const [newTask, setNewTask] = useState({ title: '' });
+  const [newTask, setNewTask] = useState({ title: '', description: '' });
 
   const [tasks, setTasks] = useState([
     { title: 'Learn TypeScript', description: 'Complete the assignment given by the mentor' },
@@ -142,7 +142,11 @@ const HomeSection = () => {
     return days;
   };
 
-  const handleInputChange = (e) => {
+  const handleTitleChange = (e) => {
+    setNewTask({ ...newTask, [e.target.name]: e.target.value });
+  };
+
+  const handleDescriptionChange = (e) => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
 
@@ -160,21 +164,20 @@ const HomeSection = () => {
     setTasks(updatedTasks);
   };
 
-
-
-
   return (
     <div className="home-section-wrapper">
       <div className="home-section">
         <div className="calendar">
           <div className="calender-header">
             <h4>Calender</h4>
-            <Link href={`/Profile/swapnilgupta14`}>
+            {/* <Link href={`/Profile/swapnilgupta14`}>
               {" "}
               <ArrowIcon width={22} height={22} color={"#0066ff"} />
-            </Link>
+            </Link> */}
           </div>
-          <div className="calendar-grid">{renderCalendarDays()}</div>
+          <div className="calendar-grid">
+            <Calender />
+          </div>
         </div>
         <div className="task-list-container">
           <div className={`tasks ${isAddingTask ? 'adding-task' : ''}`}>
@@ -202,11 +205,6 @@ const HomeSection = () => {
               <>
                 <div className="tasks-header">
                   <h4>Add a task</h4>
-                  {/* <span
-                onClick={() => setIsAddingTask(false)}
-              >
-                <PlusIcon width={22} height={22} color="#0066ff" />
-              </span> */}
                 </div>
                 <form className="add-task-form" onSubmit={handleAddTask}>
                   <div className="form-group">
@@ -216,17 +214,17 @@ const HomeSection = () => {
                       id="title"
                       name="title"
                       value={newTask.title}
-                      onChange={handleInputChange}
-                      placeholder="Enter task title"
+                      onChange={handleTitleChange}
+                      placeholder="Enter title"
                       required
                     />
-                    <label htmlFor="title">Description</label>
+                    <label htmlFor="title">Task Description</label>
                     <input
                       type="text"
                       id="description"
                       name="description"
                       value={newTask.description}
-                      onChange={handleInputChange}
+                      onChange={handleDescriptionChange}
                       placeholder="Enter description"
                     />
                   </div>
