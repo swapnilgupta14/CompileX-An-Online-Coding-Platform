@@ -167,18 +167,6 @@ const HomeSection = () => {
   return (
     <div className="home-section-wrapper">
       <div className="home-section">
-        <div className="calendar">
-          <div className="calender-header">
-            <h4>Calender</h4>
-            {/* <Link href={`/Profile/swapnilgupta14`}>
-              {" "}
-              <ArrowIcon width={22} height={22} color={"#0066ff"} />
-            </Link> */}
-          </div>
-          <div className="calendar-grid">
-            <Calender />
-          </div>
-        </div>
         <div className="task-list-container">
           <div className={`tasks ${isAddingTask ? 'adding-task' : ''}`}>
             {!isAddingTask ? (
@@ -259,7 +247,21 @@ const HomeSection = () => {
           <ProblemStats />
         </>
       </div>
-    </div>
+      <div className="home-section">
+        <div className="calendar">
+          <div className="calender-header">
+            <h4>Calender</h4>
+            {/* <Link href={`/Profile/swapnilgupta14`}>
+              {" "}
+              <ArrowIcon width={22} height={22} color={"#0066ff"} />
+            </Link> */}
+          </div>
+          <div className="calendar-grid">
+            <Calender />
+          </div>
+        </div>
+      </div>
+    </div >
   );
 };
 
