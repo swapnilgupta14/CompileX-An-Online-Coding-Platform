@@ -1,29 +1,33 @@
-@import './variables';
+@import "./variables";
 
-@import './common/Dropdown.scss';
-@import './common/Outputpanel.scss';
+@import './LandingPage/Navbar.scss';
+@import "./LandingPage/Features.scss";
+@import "./LandingPage/compilex.scss";
 
-@import './components/calender.scss';
-@import './common/ProblemStats.scss';
-@import './common/Calenderheatmap.scss';
-@import './components/Profile.scss';
-@import './components/Header.scss';
-@import './components/Add.scss';
-@import './common/CustomPopup.scss';
-@import './components/Battleground.scss';
-@import './components/Arena.scss';
-@import './components/Home.scss';
-@import './components/CodeEditor.scss';
-@import './components/Sidebar.scss';
+@import "./components/calender.scss";
+@import "./components/Profile.scss";
+@import "./components/Header.scss";
+@import "./components/Add.scss";
+@import "./components/Battleground.scss";
+@import "./components/Arena.scss";
+@import "./components/Home.scss";
+@import "./components/CodeEditor.scss";
+@import "./components/Sidebar.scss";
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import "./common/Dropdown.scss";
+@import "./common/Outputpanel.scss";
+@import "./common/Calenderheatmap.scss";
+@import "./common/CustomPopup.scss";
+@import "./common/ProblemStats.scss";
 
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 @import "~@flaticon/flaticon-uicons/css/all/all";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-i{
+i {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,9 +43,13 @@ i{
 }
 
 body {
-  font-family: 'Josefin Sans', sans-serif, Arial !important;
+  font-family: "Josefin Sans", sans-serif, Arial !important;
   margin: 0;
   padding: 0;
+
+  .dark & {
+    background-color: #333;
+  }
 }
 
 button,
@@ -52,7 +60,7 @@ textarea {
   font-size: inherit;
 }
 
-.main-container{
+.main-container {
   display: flex;
   height: 100vh;
 }
