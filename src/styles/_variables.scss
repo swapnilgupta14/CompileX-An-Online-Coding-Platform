@@ -8,3 +8,44 @@ $white: #fff;
 
 $border-radius: 5px;
 $button-hover-color: darken($primary-color, 10%);
+
+
+// // Light Theme Colors
+// :root {
+//   --primary-color: #293337;
+//   --accent-color: #0066ff;
+//   --background-color-hover: #e0e7ffa3;
+//   --background-color: #f9f9f9;
+//   --header-background-color: #f1f1f1;
+//   --white: #fff;
+//   --button-hover-color: darken(#293337, 10%);
+// }
+
+// // other utilities
+// $border-radius: 5px;
+
+// // Dark Theme Colors
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --primary-color: #e0e7ffa3;
+//     --accent-color: #0066ff;
+//     --background-color-hover: #293337;
+//     --background-color: #1a1a1a;
+//     --header-background-color: #333333;
+//     --white: #000000;
+//     --button-hover-color: darken(#e0e7ffa3, 10%);
+//   }
+// }
+
+
+// // 
+// // var(--primary-color): #293337;
+// // var(--accent-color): #0066ff;
+// // var(--background-color-hover): #e0e7ffa3;
+
+// // var(--background-color): #f9f9f9;
+// // var(--header-background-color): #f1f1f1;
+// // var(--white): #fff;
+
+// // $border-radius: 5px;
+// // var(--button-hover-color): darken(var(--primary-color), 10%);
