@@ -5,32 +5,32 @@ import Link from "next/link";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
   const router = useRouter();
 
-  // Handle Dark Mode Toggle and Persistence
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
+  // // Handle Dark Mode Toggle and Persistence
+  // useEffect(() => {
+  //   const savedTheme = localStorage.getItem("theme");
+  //   const systemPrefersDark = window.matchMedia(
+  //     "(prefers-color-scheme: dark)"
+  //   ).matches;
 
-    if (savedTheme) {
-      setDarkMode(savedTheme === "dark");
-    } else if (systemPrefersDark) {
-      setDarkMode(true);
-    }
-  }, []);
+  //   if (savedTheme) {
+  //     setDarkMode(savedTheme === "dark");
+  //   } else if (systemPrefersDark) {
+  //     setDarkMode(true);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkMode]);
+  // useEffect(() => {
+  //   if (darkMode) {
+  //     document.documentElement.classList.add("dark");
+  //     localStorage.setItem("theme", "dark");
+  //   } else {
+  //     document.documentElement.classList.remove("dark");
+  //     localStorage.setItem("theme", "light");
+  //   }
+  // }, [darkMode]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -59,9 +59,9 @@ const Header = () => {
         </li>
       </ul>
       <div className="nav-actions">
-        <button onClick={() => setDarkMode(!darkMode)} className="dark-mode-toggle">
+        {/* <button onClick={() => setDarkMode(!darkMode)} className="dark-mode-toggle">
           {darkMode ? "🌞 Light Mode" : "🌜 Dark Mode"}
-        </button>
+        </button> */}
         <div className="profile" onClick={toggleDropdown}>
           <Image
             src="/images/profile-pic.png"
