@@ -1,22 +1,32 @@
-import '../styles/global.scss';
-import Sidebar from './Sidebar';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import { useEffect } from 'react';
-import store from '../redux/store';
-import { Provider } from 'react-redux';
+import "../styles/global.scss";
+import Sidebar from "./Sidebar";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import store from "../redux/store";
+import { Provider } from "react-redux";
+import LandingPage from "./index";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true);
+      router.push("/Home");
+    }
+  }, []);
 
   const titleMap = {
-    '/Home': 'Home - Compilex',
-    '/Editor': 'Playground  - Compilex',
-    '/Battleground/Battles': 'Battleground  - Compilex',
-    '/Arena/[id]': 'Arena - Compilex',
+    "/Home": "Home - Compilex",
+    "/Editor": "Playground - Compilex",
+    "/Battleground/Battles": "Battleground - Compilex",
+    "/Arena/[id]": "Arena - Compilex",
   };
 
-  const title = titleMap[router.pathname] || 'Compilex';
+  const title = titleMap[router.pathname] || "Compilex";
 
   return (
     <>
@@ -25,12 +35,19 @@ function MyApp({ Component, pageProps }) {
           <title>{title}</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="app-container"></div>
-        <Sidebar index={1} />
-        <div className="main-content">
-          <Component {...pageProps} />
+        <div className="app-container">
+          <div className="main-content">
+            {isAuthenticated ? (
+              <>
+                <Sidebar index={1} />
+                <Component {...pageProps} />
+              </>
+            ) : (
+              <LandingPage setIsAuthenticated={setIsAuthenticated} />
+            )}
+          </div>
         </div>
-      </Provider >
+      </Provider>
     </>
   );
 }
