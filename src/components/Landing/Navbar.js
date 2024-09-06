@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Navbar = ({handleSignIn}) => {
   return (
-    <nav className="navbar">
+    <nav className="navbar-landing">
       <div className="logo">
         <Image src={Logo} alt="logo" className="w-9 h-8" draggable="false" />
         Compilex
