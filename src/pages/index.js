@@ -10,53 +10,6 @@ const LandingPage = ({ setIsAuthenticated }) => {
   const router = useRouter();
   const dummyToken = "duywedywjbdgdywgydugwdvdhed";
 
-  const featuresData = [
-    {
-      imgSrc: "/images/icon-challenge.png",
-      altText: "Challenge Icon",
-      title: "Battle Arena",
-      description:
-        "Face off against coders worldwide in real-time coding battles. Show them who’s the real ‘script’ master!",
-    },
-    {
-      imgSrc: "/images/icon-leaderboard.png",
-      altText: "Leaderboard Icon",
-      title: "Global Leaderboards",
-      description:
-        "Climb the ranks and see how you stack up against the competition. Bragging rights included.",
-    },
-    {
-      imgSrc: "/images/icon-practice.png",
-      altText: "Practice Icon",
-      title: "Practice Playground",
-      description:
-        "Need to warm up before the big battle? Our playground is packed with challenges to sharpen your skills.",
-      button: "Practice Now",
-    },
-    {
-      imgSrc: "/images/icon-store.png",
-      altText: "WhiteBoard Icon",
-      title: "Whiteboard",
-      description:
-        "Collaborate and sketch out your ideas visually with our integrated whiteboard.",
-      button: "Try Now",
-    },
-    {
-      imgSrc: "/images/icon-store.png",
-      altText: "Store Icon",
-      title: "Tasks Manager",
-      description:
-        "Organize your projects and tasks with our built-in task management system.",
-    },
-    {
-      imgSrc: "/images/icon-store.png",
-      altText: "Store Icon",
-      title: "Statistics",
-      description:
-        "Track your coding progress with detailed statistics and insights.",
-    },
-  ];
-
   const handleSignIn = () => {
     alert("Signing in with a dummy token for demo purposes.");
     localStorage.setItem("authToken", dummyToken);
@@ -91,8 +44,9 @@ const LandingPage = ({ setIsAuthenticated }) => {
       </section>
 
       {/* Feature Section */}
+      <h1 className="section-title">Why Compilex?</h1>
       <section className="features-section">
-        <Features/>
+        <Features />
       </section>
 
       {/* Call to Action Section */}
