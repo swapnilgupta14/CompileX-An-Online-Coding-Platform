@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
         setIsAuthenticated(true);
         router.push("/Home");
       } else {
+        setIsAuthenticated(false);
         if (router.pathname !== "/") {
           router.push("/");
         }
@@ -45,7 +46,7 @@ function MyApp({ Component, pageProps }) {
         </Head>
         <div className="app-container">
           <div className="main-content">
-            {isAuthenticated ? (
+            {isAuthenticated && localStorage.getItem("authToken") ? (
               <>
                 <Sidebar index={1} />
                 <Component {...pageProps} />
