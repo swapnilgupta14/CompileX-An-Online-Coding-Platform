@@ -13,21 +13,19 @@ function MyApp({ Component, pageProps }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      setIsAuthenticated(true);
-      router.push("/Home");
-    }
-  }, []);
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("authToken");
 
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("authToken");
-    useEffect(() => {
-      if (!token && router.pathname !== "/") {
-        router.push("/");
+      if (token) {
+        setIsAuthenticated(true);
+        router.push("/Home");
+      } else {
+        if (router.pathname !== "/") {
+          router.push("/");
+        }
       }
-    }, [token]);
-  }
+    }
+  }, [router]);
 
   const titleMap = {
     "/Home": "Home - Compilex",
