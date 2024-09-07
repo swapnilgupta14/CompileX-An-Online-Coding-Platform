@@ -2,22 +2,32 @@ import "../styles/global.scss";
 import Sidebar from "./Sidebar";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import store from "../redux/store";
 import { Provider } from "react-redux";
 import LandingPage from "./index";
+import { type } from "os";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
     if (token) {
       setIsAuthenticated(true);
       router.push("/Home");
     }
   }, []);
+
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("authToken");
+    useEffect(() => {
+      if (!token && router.pathname !== "/") {
+        router.push("/");
+      }
+    }, [token]);
+  }
 
   const titleMap = {
     "/Home": "Home - Compilex",
