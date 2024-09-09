@@ -5,42 +5,13 @@ import Link from "next/link";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [darkMode, setDarkMode] = useState(false);
   const router = useRouter();
-
-  // // Handle Dark Mode Toggle and Persistence
-  // useEffect(() => {
-  //   const savedTheme = localStorage.getItem("theme");
-  //   const systemPrefersDark = window.matchMedia(
-  //     "(prefers-color-scheme: dark)"
-  //   ).matches;
-
-  //   if (savedTheme) {
-  //     setDarkMode(savedTheme === "dark");
-  //   } else if (systemPrefersDark) {
-  //     setDarkMode(true);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (darkMode) {
-  //     document.documentElement.classList.add("dark");
-  //     localStorage.setItem("theme", "dark");
-  //   } else {
-  //     document.documentElement.classList.remove("dark");
-  //     localStorage.setItem("theme", "light");
-  //   }
-  // }, [darkMode]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const userName = "swapnilgupta14";
-
-  const handleRouteToProfile = () => {
-    router.push(`/Profile/${userName}`);
-  };
 
   return (
     <nav className="navbar">
@@ -59,9 +30,6 @@ const Header = () => {
         </li>
       </ul>
       <div className="nav-actions">
-        {/* <button onClick={() => setDarkMode(!darkMode)} className="dark-mode-toggle">
-          {darkMode ? "🌞 Light Mode" : "🌜 Dark Mode"}
-        </button> */}
         <div className="profile" onClick={toggleDropdown}>
           <Image
             src="/images/profile-pic.png"
@@ -83,7 +51,7 @@ const Header = () => {
                   width={60}
                   height={60}
                   className="dropdown-profile-pic"
-                  onClick={handleRouteToProfile}
+                  onClick={() => router.push(`/Profile/swapnilgupta14}`)}
                 />
                 <div className="user-details">
                   <span className="user-name">Swapnil Gupta</span>

@@ -15,17 +15,18 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("authToken");
-
-      if (token) {
+      console.log(window.location.pathname);
+      if (token && token !== "undefined") {
         setIsAuthenticated(true);
         router.push("/Home");
       } else {
+        setIsAuthenticated(false);
         if (router.pathname !== "/") {
           router.push("/");
         }
       }
     }
-  }, [router]);
+  }, []);
 
   const titleMap = {
     "/Home": "Home - Compilex",
@@ -45,7 +46,7 @@ function MyApp({ Component, pageProps }) {
         </Head>
         <div className="app-container">
           <div className="main-content">
-            {isAuthenticated ? (
+            {isAuthenticated && localStorage.getItem("authToken") ? (
               <>
                 <Sidebar index={1} />
                 <Component {...pageProps} />

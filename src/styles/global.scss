@@ -1,8 +1,9 @@
 @import "./variables";
 
-@import './LandingPage/Navbar.scss';
+@import "./LandingPage/Navbar.scss";
 @import "./LandingPage/Features.scss";
-@import "./LandingPage/compilex.scss";
+@import "./LandingPage/Index.scss";
+@import "./LandingPage/Product.scss";
 
 @import "./components/calender.scss";
 @import "./components/Profile.scss";
@@ -42,14 +43,14 @@ i {
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Josefin Sans", sans-serif, Arial !important;
   margin: 0;
   padding: 0;
-  
-  // .dark & {
-  //   background-color: #333;
-  // }
 }
 
 button,
@@ -63,4 +64,43 @@ textarea {
 .main-container {
   display: flex;
   height: 100vh;
+}
+
+.sectionTitle {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .sectionHeader {
+    position: sticky;
+    top: 50%;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: $accent-color;
+    background-image: linear-gradient(
+      315deg,
+      $accent-color 30%,
+      rgba(25, 23, 20, 0.8) 70%
+    );
+    background-clip: text;
+    color: transparent;
+    transition: font-size 0.2s ease;
+    margin-bottom: 3rem;
+  }
+
+  p {
+    position: absolute;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 65%;
+    font-size: 1.2rem;
+    color: $primary-color;
+    font-weight: 600;
+  }
 }
