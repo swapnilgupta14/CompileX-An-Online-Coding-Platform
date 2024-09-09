@@ -5,10 +5,12 @@
     color: $primary-color;
     border-radius: $border-radius;
     z-index: 1000;
-    max-width: fit-content;
     position: absolute;
     top: 2%;
+
+    max-width: fit-content;
     min-height: fit-content;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,12 +37,15 @@
       gap: 1rem;
 
       li {
+        transition: color 0.7s ease, font-weight 0.3s ease-in, text-shadow 0.3s ease-in-out;
         font-size: 0.9rem;
+        font-weight: 600;
         cursor: pointer;
-        transition: color 0.3s ease-in-out;
 
         &:hover {
-          color: lighten($primary-color, 10%);
+          color: $accent-color;
+          font-weight: 610;
+          text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
         }
       }
 

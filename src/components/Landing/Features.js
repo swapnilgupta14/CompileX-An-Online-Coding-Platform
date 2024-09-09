@@ -29,8 +29,9 @@ const Features = () => {
           <div className="content-wrapper">
             <h3>Compilex</h3>
             <p>
-              Face off against coders worldwide in real-time coding battles.
-              Show them who’s the real ‘script’ master!
+              The ultimate platform for coding practice, live battles, and
+              collaborative problem-solving. Elevate your coding skills with
+              real-time feedback and performance tracking."
             </p>
           </div>
           <div className="btn-bg">
@@ -40,8 +41,9 @@ const Features = () => {
         <div id="second">
           <h3>Battles & Global Leaderboards</h3>
           <p>
-            Climb the ranks and see how you stack up against the competition.
-            Bragging rights included.
+            Climb the ranks and see how you stack during face off against coders
+            worldwide in real-time coding battles. Show them who’s the real
+            ‘script’ master!
           </p>
         </div>
         <div id="third">
