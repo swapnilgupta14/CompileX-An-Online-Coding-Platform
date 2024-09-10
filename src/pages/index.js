@@ -12,7 +12,10 @@ import Battleground from "/public/assets/Battleground.png";
 import Whiteboard from "/public/assets/Whiteboard.png";
 import Profile from "/public/assets/Profile.png";
 
+import useLenis from "../utils/CustomHooks/useLenis";
+
 const LandingPage = ({ setIsAuthenticated }) => {
+  useLenis();
   const [fontSize, setFontSize] = useState(3);
   const router = useRouter();
   const dummyToken = "duywedywjbdgdywgydugwdvdhed";
@@ -69,7 +72,7 @@ const LandingPage = ({ setIsAuthenticated }) => {
       <section className="hero-section">
         <div className="hero-text">
           <h1 className="hero-title header--shadow">
-            Ready to Code? Bring Your A-Game to Compilex!
+            Ready to Code? Bring Your A-Game to CompileX!
           </h1>
           <p className="hero-subtitle">
             Where code battles, leaderboards, and problem-solving prowess come
@@ -116,24 +119,24 @@ const LandingPage = ({ setIsAuthenticated }) => {
         <div className="layout-container">
           <div className="first">
             <div className="card medium-card">
-              <Image src={Arena} layout="responsive" />
+              <Image src={Arena} />
             </div>
             <div className="card small-card">
-              <Image src={Task} layout="responsive" />
+              <Image src={Task} />
             </div>
           </div>
 
           <div className="second">
             <div className="card small-card">
-              <Image src={Battleground} layout="responsive" />
+              <Image src={Battleground} />
             </div>
             <div className="card medium-card">
-              <Image src={Whiteboard} layout="responsive" />
+              <Image src={Whiteboard} />
             </div>
           </div>
 
           <div className="card large-card">
-            <Image src={Profile} layout="responsive" />
+            <Image src={Profile} />
           </div>
         </div>
       </section>
@@ -142,20 +145,58 @@ const LandingPage = ({ setIsAuthenticated }) => {
 
       <footer className="footer">
         <div className="footer-content">
-          <div className="footer-links">
-            <a href="#">About Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Support</a>
+          <div className="footer-top">
+            <div className="footer-left">
+              <h2>We would love to hear from you.</h2>
+              <p>
+                Feel free to reach out if you want to collaborate with us, or
+                simply have a chat.
+              </p>
+              <a href="#" className="cta-button">
+                Become a Client <span>→</span>
+              </a>
+              <p className="footer-contact-email">info@compilex.com</p>
+            </div>
+
+            <div className="footer-right">
+              <div className="footer-section contact-us">
+                <h3>Contact Us</h3>
+                <p>
+                  Our Email{" "}
+                  <a href="mailto:info@compilex.com">contact@compilex.com</a>
+                </p>
+                <p>Our Phone +91-2345532677</p>
+                <p>Kanpur, India</p>
+              </div>
+
+              <div className="footer-section follow-us">
+                <h3>Follow Us</h3>
+                <a href="#">dribbble →</a>
+                <a href="#">linkedin →</a>
+                <a href="#">clutch →</a>
+                <a href="#">instagram →</a>
+              </div>
+
+              <div className="footer-section services">
+                <h3>Services</h3>
+                <a href="#">Mobile development</a>
+                <a href="#">Web development</a>
+                <a href="#">Solid design solutions</a>
+                <a href="#">About</a>
+                <a href="#">Development</a>
+              </div>
+            </div>
           </div>
-          <div className="footer-social">
-            <img src="/images/icon-twitter.png" alt="Twitter" />
-            <img src="/images/icon-facebook.png" alt="Facebook" />
-            <img src="/images/icon-github.png" alt="GitHub" />
+
+          <div className="footer-bottom">
+            <p>
+              © 2024 CompileX. All Rights Reserved.{" "}
+              <a href="#">Privacy Policy</a>
+            </p>
+            <a href="#" className="back-to-top">
+              Back to the top ↑
+            </a>
           </div>
-          <p className="footer-copyright">
-            © 2024 Compilex. All Rights Reserved.
-          </p>
         </div>
       </footer>
     </div>
