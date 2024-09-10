@@ -162,28 +162,28 @@ const LandingPage = ({ setIsAuthenticated }) => {
               <div className="footer-section contact-us">
                 <h3>Contact Us</h3>
                 <p>
-                  Our Email{" "}
+                  Our Email:{" "}
                   <a href="mailto:info@compilex.com">contact@compilex.com</a>
                 </p>
-                <p>Our Phone +91-2345532677</p>
+                <p>Our Phone: +91-7345532677</p>
                 <p>Kanpur, India</p>
               </div>
 
               <div className="footer-section follow-us">
                 <h3>Follow Us</h3>
-                <a href="#">dribbble →</a>
-                <a href="#">linkedin →</a>
-                <a href="#">clutch →</a>
-                <a href="#">instagram →</a>
+                <a href="#">Github →</a>
+                <a href="#">Linkedin →</a>
+                <a href="#">Twitter →</a>
+                <a href="#">Instagram →</a>
               </div>
 
               <div className="footer-section services">
-                <h3>Services</h3>
-                <a href="#">Mobile development</a>
-                <a href="#">Web development</a>
-                <a href="#">Solid design solutions</a>
-                <a href="#">About</a>
-                <a href="#">Development</a>
+                <h3>Meet The Team</h3>
+                <a href="#">Rishabh Didwania</a>
+                <a href="#">Sanat Kumar Mishra</a>
+                <a href="#">Swapnil Gupta</a>
+                <a href="#">About The Product</a>
+                <a href="#">Docs</a>
               </div>
             </div>
           </div>
