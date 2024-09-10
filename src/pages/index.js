@@ -16,7 +16,9 @@ import useLenis from "../utils/CustomHooks/useLenis";
 
 const LandingPage = ({ setIsAuthenticated }) => {
   useLenis();
+
   const [fontSize, setFontSize] = useState(3);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const router = useRouter();
   const dummyToken = "duywedywjbdgdywgydugwdvdhed";
 
@@ -189,10 +191,7 @@ const LandingPage = ({ setIsAuthenticated }) => {
           </div>
 
           <div className="footer-bottom">
-            <p>
-              © 2024 CompileX. All Rights Reserved.{" "}
-              <a href="#">Privacy Policy</a>
-            </p>
+            <p>© {currentYear} CompileX. All Rights Reserved. </p>
             <a href="#" className="back-to-top">
               Back to the top ↑
             </a>
