@@ -1,4 +1,4 @@
-Use HTTP insted of HTTPS to fetch data from the server
+Use HTTP instead of HTTPS to fetch data from the server
 
 1. Open App
 2. Go to Site Settings
