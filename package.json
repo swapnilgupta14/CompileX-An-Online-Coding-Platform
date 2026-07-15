@@ -14,7 +14,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@studio-freight/lenis": "^1.0.42",
     "@uiw/react-codemirror": "^4.23.0",
-    "axios": "^1.7.3",
+    "axios": "^1.16.0",
     "codemirror": "^5.65.17",
     "gsap": "^3.12.5",
     "lightningcss": "^1.26.0",
