@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import { requireSession } from "@/lib/auth/server";
+
+// Auth-gated segment — every /app/* page checks the session cookie, which
+// only exists per request. Prerendering these at build time would try to
+// read ADMIN_EMAIL/ADMIN_PASSWORD/AUTH_SECRET before Vercel injects them.
+export const dynamic = "force-dynamic";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
 import { QueryProvider } from "@/components/providers/QueryProvider";
