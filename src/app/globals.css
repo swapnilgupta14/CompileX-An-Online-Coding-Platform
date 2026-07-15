@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* Tell Tailwind to treat the `.dark` class on <html> as the dark selector. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* Semantic names are declared once here and used across the app.      */
+/* Raw Tailwind palette values live only inside these tokens.          */
+/* ------------------------------------------------------------------ */
+@theme {
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-display:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Themed variables                                                    */
+/* Everything the UI reads goes through the semantic names below.      */
+/* ------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #f8f8f6;                /* page background */
+  --surface: #ffffff;           /* cards, inputs */
+  --surface-alt: #f4f4f2;       /* hovered cards, subtle wells */
+  --surface-inverse: #0a0a0a;   /* dark blocks in a light theme (CTA, badges) */
+  --surface-inverse-fg: #ffffff;
+
+  /* Text */
+  --ink: #0a0a0a;
+  --ink-soft: #171717;
+  --muted: #525252;
+  --muted-strong: #404040;
+  --faint: #a3a3a3;
+
+  /* Lines */
+  --hairline: #e5e5e5;
+  --hairline-strong: #d4d4d4;
+
+  /* Accent (mono; used for progress bars, dots) */
+  --accent: #0a0a0a;
+  --accent-soft: #171717;
+  --focus: #0a0a0a;
+
+  /* Semantic states (kept muted; used sparingly) */
+  --success: #059669;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --danger-ring: #fee2e2;
+
+  /* Elevation */
+  --shadow-card:
+    0 1px 2px rgb(0 0 0 / 0.04), 0 1px 3px rgb(0 0 0 / 0.03);
+  --shadow-lift:
+    0 12px 24px -12px rgb(0 0 0 / 0.12), 0 4px 8px -4px rgb(0 0 0 / 0.06);
+  --shadow-pop:
+    0 24px 60px -20px rgb(0 0 0 / 0.18);
+
+  /* Grid overlay lines (used by the hero) */
+  --grid-line: rgb(0 0 0 / 0.06);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #0a0a0a;
+  --surface: #131313;
+  --surface-alt: #1a1a1a;
+  --surface-inverse: #f5f5f5;
+  --surface-inverse-fg: #0a0a0a;
+
+  --ink: #f5f5f5;
+  --ink-soft: #e5e5e5;
+  --muted: #a3a3a3;
+  --muted-strong: #d4d4d4;
+  --faint: #525252;
+
+  --hairline: #262626;
+  --hairline-strong: #333333;
+
+  --accent: #f5f5f5;
+  --accent-soft: #e5e5e5;
+  --focus: #f5f5f5;
+
+  --success: #10b981;
+  --danger: #f87171;
+  --danger-bg: #2a1213;
+  --danger-ring: #3a1a1a;
+
+  --shadow-card:
+    0 1px 2px rgb(0 0 0 / 0.5), 0 1px 3px rgb(0 0 0 / 0.4);
+  --shadow-lift:
+    0 12px 24px -12px rgb(0 0 0 / 0.6), 0 4px 8px -4px rgb(0 0 0 / 0.4);
+  --shadow-pop:
+    0 24px 60px -20px rgb(0 0 0 / 0.6);
+
+  --grid-line: rgb(255 255 255 / 0.06);
+}
+
+/* Expose semantic names as Tailwind colors so `bg-surface`, `text-ink`
+ * etc. work throughout the codebase. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-surface-inverse-fg: var(--surface-inverse-fg);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-muted-strong: var(--muted-strong);
+  --color-faint: var(--faint);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-focus: var(--focus);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+  }
+
+  html,
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+  }
+
+  body {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+
+  h1 {
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+
+  h2 {
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--hairline);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilities                                                           */
+/* ------------------------------------------------------------------ */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .hairline {
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 40%,
+      transparent 75%
+    );
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Keyframes                                                           */
+/* ------------------------------------------------------------------ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}

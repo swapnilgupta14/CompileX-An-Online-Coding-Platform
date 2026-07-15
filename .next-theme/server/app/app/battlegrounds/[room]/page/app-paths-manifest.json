@@ -1,0 +1,3 @@
+{
+  "/app/battlegrounds/[room]/page": "app/app/battlegrounds/[room]/page.js"
+}

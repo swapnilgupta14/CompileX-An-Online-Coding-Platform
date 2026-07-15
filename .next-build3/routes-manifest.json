@@ -1,0 +1,147 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/app/admin/problems/[id]/testcases",
+      "regex": "^/app/admin/problems/([^/]+?)/testcases(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/app/admin/problems/(?<nxtPid>[^/]+?)/testcases(?:/)?$"
+    },
+    {
+      "page": "/app/battlegrounds/[room]",
+      "regex": "^/app/battlegrounds/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtProom": "nxtProom"
+      },
+      "namedRegex": "^/app/battlegrounds/(?<nxtProom>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/app/battlegrounds/[room]/play/[user]",
+      "regex": "^/app/battlegrounds/([^/]+?)/play/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtProom": "nxtProom",
+        "nxtPuser": "nxtPuser"
+      },
+      "namedRegex": "^/app/battlegrounds/(?<nxtProom>[^/]+?)/play/(?<nxtPuser>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/app/problems/[id]",
+      "regex": "^/app/problems/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/app/problems/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/app/profile/[username]",
+      "regex": "^/app/profile/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPusername": "nxtPusername"
+      },
+      "namedRegex": "^/app/profile/(?<nxtPusername>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/app",
+      "regex": "^/app(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app(?:/)?$"
+    },
+    {
+      "page": "/app/admin/problems",
+      "regex": "^/app/admin/problems(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app/admin/problems(?:/)?$"
+    },
+    {
+      "page": "/app/admin/problems/new",
+      "regex": "^/app/admin/problems/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app/admin/problems/new(?:/)?$"
+    },
+    {
+      "page": "/app/battlegrounds",
+      "regex": "^/app/battlegrounds(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app/battlegrounds(?:/)?$"
+    },
+    {
+      "page": "/app/playground",
+      "regex": "^/app/playground(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app/playground(?:/)?$"
+    },
+    {
+      "page": "/app/problems",
+      "regex": "^/app/problems(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app/problems(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

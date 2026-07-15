@@ -1,0 +1,17 @@
+{
+  "node": {
+    "003e86e431f4e439fc9a4286c11fe0caf7c2c925d9": {
+      "workers": {
+        "app/app/battlegrounds/[room]/play/[user]/page": {
+          "moduleId": 24786,
+          "async": false,
+          "exportedName": "logoutAction",
+          "filename": "src/app/logout/actions.ts"
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/app/logout/actions.ts"
+    }
+  },
+  "edge": {}
+}

@@ -1,0 +1,17 @@
+{
+  "node": {
+    "0045cb463e5b99d7198f4991aa9782e0170c77236b": {
+      "workers": {
+        "app/app/admin/problems/new/page": {
+          "moduleId": 46128,
+          "async": false,
+          "exportedName": "logoutAction",
+          "filename": "src/app/logout/actions.ts"
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/app/logout/actions.ts"
+    }
+  },
+  "edge": {}
+}
