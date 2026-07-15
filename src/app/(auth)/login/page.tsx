@@ -6,6 +6,9 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { LoginForm } from "./LoginForm";
 import { getSession } from "@/lib/auth/server";
 
+// Reads the session cookie on every request — no static prerender.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Sign in — CompileX",
   description: "Sign in to your CompileX workspace.",
