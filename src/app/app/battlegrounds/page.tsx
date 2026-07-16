@@ -1,39 +1,15 @@
 import Link from "next/link";
 import { ArrowRight, Timer } from "lucide-react";
+import { MOCK_ROOMS, type MockRoom } from "@/lib/api/mock";
 
 /**
  * Battleground list. The current backend doesn't expose a list endpoint;
- * this page shows the demo Weekly + an author link. Wire the real list
- * once the /battlefield/list_rooms/ endpoint lands.
+ * we render the shared mock room set. Same room ids feed the join gate
+ * and the play screen, so the whole flow is clickable end-to-end.
  */
-const rooms = [
-  {
-    room_id: "weekly-3",
-    name: "Weekly · Round 3",
-    status: "ongoing" as const,
-    minutesLeft: 14,
-    players: 24,
-    problems: 4,
-  },
-  {
-    room_id: "starter",
-    name: "Starter room",
-    status: "upcoming" as const,
-    startsIn: "in 1 h 12 m",
-    players: 0,
-    problems: 3,
-  },
-  {
-    room_id: "past-round-2",
-    name: "Weekly · Round 2",
-    status: "completed" as const,
-    endedAt: "3 days ago",
-    players: 42,
-    problems: 4,
-  },
-];
+const rooms = MOCK_ROOMS;
 
-const STATUS_LABEL: Record<(typeof rooms)[number]["status"], string> = {
+const STATUS_LABEL: Record<MockRoom["status"], string> = {
   ongoing: "Live",
   upcoming: "Starts soon",
   completed: "Finished",

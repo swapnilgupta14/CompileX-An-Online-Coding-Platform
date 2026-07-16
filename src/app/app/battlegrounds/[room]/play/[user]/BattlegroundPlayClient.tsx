@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { ArrowLeft, Check, Trophy, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { battleApi } from "@/lib/api/battle";
+import { mockLeaderboard } from "@/lib/api/mock";
 import { toDifficulty } from "@/lib/problems/difficulty";
 import { STARTERS, type Lang } from "@/lib/problems/starters";
 import { useWebSocket } from "@/hooks/use-websocket";
@@ -52,7 +53,12 @@ export function BattlegroundPlayClient({ roomId, userId }: Props) {
   const [customState, setCustomState] = useState<OutputState>("IDLE");
   const [customExec, setCustomExec] = useState<number | null>(null);
 
-  const [leaderboard, setLeaderboard] = useState<LeaderboardRow[]>([]);
+  // Seed the leaderboard with the deterministic mock so it looks alive
+  // before the socket delivers a real snapshot. First socket message
+  // replaces it entirely.
+  const [leaderboard, setLeaderboard] = useState<LeaderboardRow[]>(() =>
+    mockLeaderboard(roomId),
+  );
 
   const battle = useWebSocket<BattlegroundCodeReq, BattleCodeRes>(
     `/battle/code_execute/${roomId}/`,
@@ -294,7 +300,11 @@ function Leaderboard({
       ) : (
         <ul className="mt-3 flex flex-col gap-1">
           {rows.slice(0, 10).map((r) => {
-            const isYou = r.uid_name.includes(yourUid.slice(0, 6));
+            // Match by uid prefix (real backend) or by the mock's "you"
+            // sentinel name (demo mode).
+            const isYou =
+              r.uid_name === "you" ||
+              r.uid_name.includes(yourUid.slice(0, 6));
             return (
               <li
                 key={`${r.rank}-${r.uid_name}`}
